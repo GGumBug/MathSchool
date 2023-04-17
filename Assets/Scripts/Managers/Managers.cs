@@ -1,0 +1,42 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Managers : MonoBehaviour
+{
+    #region SingleTone
+    private static Managers s_Instance = null;
+    private static Managers Instance { get { Init(); return s_Instance; } }
+    #endregion
+
+    private ResourceManager         _resource = new ResourceManager();
+    private UIManager               _ui = new UIManager();
+
+    public static ResourceManager   Resource { get { return Instance._resource; } }
+    public static UIManager         UI { get { return Instance._ui; } }
+
+    private void Awake()
+    {
+        Init();
+    }
+
+    private static void Init()
+    {
+        if (s_Instance == null)
+        {
+            GameObject go = GameObject.Find("@Managers");
+            if (go == null)
+            {
+                go = new GameObject { name = "@Managers" };
+                go.AddComponent<Managers>();
+            }
+            DontDestroyOnLoad(go);
+            s_Instance = go.GetComponent<Managers>();
+        }
+    }
+
+    public void Clear()
+    {
+        UI.Clear();
+    }
+}
