@@ -11,9 +11,11 @@ public class Managers : MonoBehaviour
 
     private ResourceManager         _resource = new ResourceManager();
     private UIManager               _ui = new UIManager();
+    private PoolManager              _pool = new PoolManager();
 
     public static ResourceManager   Resource { get { return Instance._resource; } }
     public static UIManager         UI { get { return Instance._ui; } }
+    public static PoolManager        Pool { get { return Instance._pool; } }
 
     private void Awake()
     {
@@ -33,10 +35,13 @@ public class Managers : MonoBehaviour
             DontDestroyOnLoad(go);
             s_Instance = go.GetComponent<Managers>();
         }
+
+        s_Instance._pool.Init();
     }
 
     public void Clear()
     {
         UI.Clear();
+        Pool.Clear();
     }
 }

@@ -10,4 +10,11 @@ public class Define : MonoBehaviour
         Main,
         Game
     }
+
+    public enum State
+    {
+        Die,
+        Idle,
+        Skill
+    }
 }

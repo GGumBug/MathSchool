@@ -9,13 +9,16 @@ public class ResourceManager
         return Resources.Load<T>(path);
     }
 
-    public GameObject Instantiate(string path, Transform patent = null)
+    public GameObject Instantiate(string path, Transform parent = null)
     {
         GameObject original = Load<GameObject>($"Prefabs/{path}");
         if (original == null)
             throw new System.Exception($"Failed to load prefab: { path }");
 
-        GameObject go   = Object.Instantiate(original, patent);
+        if (original.GetComponent<Poolable>() != null)
+            return Managers.Pool.Pop(original, parent).gameObject;
+
+        GameObject go   = Object.Instantiate(original, parent);
         go.name         = original.name;
 
         return go;
@@ -25,6 +28,13 @@ public class ResourceManager
     {
         if (go == null)
             return;
+
+        Poolable poolable = go.GetComponent<Poolable>();
+        if (poolable != null)
+        {
+            Managers.Pool.Push(poolable);
+            return;
+        }
 
         Object.Destroy(go, time);
     }

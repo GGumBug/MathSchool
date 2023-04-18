@@ -18,7 +18,6 @@ public class UI_Game : UI_Scene
         GameObject unitPanel = GetGameObject((int)GameObjects.UnitPanel);
     }
 
-    //임시 코드 나중에 수정
     public void SpawnUnit()
     {
         GameObject unit = Managers.Resource.Instantiate("Unit");
