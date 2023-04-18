@@ -21,6 +21,7 @@ public class UI_Game : UI_Scene
     //임시 코드 나중에 수정
     public void SpawnUnit()
     {
-        Managers.Resource.Instantiate("Unit");
+        GameObject unit = Managers.Resource.Instantiate("Unit");
+        unit.GetComponentInChildren<UnitController>().BeforeCollocate();
     }
 }
