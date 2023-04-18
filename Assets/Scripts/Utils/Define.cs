@@ -15,6 +15,7 @@ public class Define : MonoBehaviour
     {
         Die,
         Idle,
+        Move,
         Skill
     }
 }

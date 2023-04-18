@@ -6,16 +6,19 @@ using UnityEngine.EventSystems;
 public class UnitController : BaseController
 {
     private float _attackDelay = 10f;
-
     private Color originColor;
+    
 
     private GameObject guidUnit = null;
-
     private UnitStat _stat;
+
+    public Coroutine EnemyAttacked { get; private set; }
+    public Tile Tile { get; private set; }
+    
 
     protected override void Init()
     {
-        _stat = gameObject.GetComponent<UnitStat>();
+        _stat = GetComponent<UnitStat>();
     }
 
     public void BeforeCollocate()
@@ -48,6 +51,23 @@ public class UnitController : BaseController
         Managers.Resource.Destroy(gameObject);
         guidUnit.GetComponentInChildren<SpriteRenderer>().color = originColor;
         Managers.Resource.Destroy(guidUnit);
+        guidUnit = null;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            EnemyStat enemyStat = collision.GetComponent<EnemyStat>();
+            float delay = enemyStat.AtkDelay;
+
+            StartCoroutine(IEOnAttacked(enemyStat, delay));
+        }
+    }
+
+    public void EndAttacked()
+    {
+        StopCoroutine(EnemyAttacked);
     }
 
     protected override void UpdateSkill()
@@ -58,7 +78,7 @@ public class UnitController : BaseController
             GameObject go = Managers.Resource.Instantiate("Bullet");
             Bullet bullet = go.GetComponentInChildren<Bullet>();
             bullet.transform.position = transform.position;
-            bullet.SetAtk(_stat.Atk);
+            bullet.SetStat(_stat);
             _attackDelay = 0;
         }
     }
@@ -90,8 +110,8 @@ public class UnitController : BaseController
             {
                 if (!hit.collider.gameObject.GetComponent<Tile>().IsEmpty)
                 {
-                    Tile tile = hit.collider.GetComponent<Tile>();
-                    tile.SetIsEmpty();
+                    Tile = hit.collider.GetComponent<Tile>();
+                    Tile.SetIsEmpty();
                     Collocate();
                     yield break;
                 }
@@ -106,5 +126,12 @@ public class UnitController : BaseController
         }
     }
 
+    private IEnumerator IEOnAttacked(EnemyStat enemyStat, float delay)
+    {
+        _stat.OnAttacked(enemyStat);
 
+        yield return new WaitForSeconds(delay);
+
+        EnemyAttacked = StartCoroutine(IEOnAttacked(enemyStat, delay));
+    }
 }

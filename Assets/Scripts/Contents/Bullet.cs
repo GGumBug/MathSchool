@@ -5,7 +5,7 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     private float _speed = 10f;
-    public int Atk { get; private set; }
+    public UnitStat unitStat { get; private set; }
 
     private void OnEnable()
     {
@@ -18,9 +18,21 @@ public class Bullet : MonoBehaviour
         transform.position += Vector3.right * Time.deltaTime * _speed;
     }
 
-    public void SetAtk(int value)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        Atk = value;
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            Managers.Resource.Destroy(gameObject);
+        }
+    }
+
+    public void SetStat(Stat stat)
+    {
+        UnitStat unit = stat as UnitStat;
+        if (unit != null)
+        {
+            unitStat = unit;
+        }
     }
 
     private IEnumerator IEDestroy()

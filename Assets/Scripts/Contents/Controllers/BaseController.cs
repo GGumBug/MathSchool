@@ -18,6 +18,8 @@ public abstract class BaseController : MonoBehaviour
             {
                 case Define.State.Die:
                     break;
+                case Define.State.Move:
+                    break;
                 case Define.State.Idle:
                     break;
                 case Define.State.Skill:
@@ -38,6 +40,9 @@ public abstract class BaseController : MonoBehaviour
             case Define.State.Die:
                 UpdateDie();
                 break;
+            case Define.State.Move:
+                UpdateMove();
+                break;
             case Define.State.Idle:
                 UpdateIdle();
                 break;
@@ -50,5 +55,6 @@ public abstract class BaseController : MonoBehaviour
     protected abstract void Init();
     protected virtual void UpdateDie() { }
     protected virtual void UpdateIdle() { }
+    protected virtual void UpdateMove() { }
     protected virtual void UpdateSkill() { }
 }
