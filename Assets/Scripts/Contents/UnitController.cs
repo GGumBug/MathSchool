@@ -12,15 +12,32 @@ public class UnitController : MonoBehaviour
         StartCoroutine("IEBeforeCollocate");
     }
 
+    private void SetGuidUnit()
+    {
+        guidUnit = Managers.Resource.Instantiate("Unit");
+        SpriteRenderer sprite = guidUnit.GetComponentInChildren<SpriteRenderer>();
+        Color color = sprite.color;
+        color.a = 0.5f;
+        sprite.color = color;
+    }
+
+    private void Collocate()
+    {
+        transform.position = guidUnit.transform.position;
+        Managers.Resource.Destroy(guidUnit);
+    }
+
+    private void CancelCollocate()
+    {
+        Managers.Resource.Destroy(gameObject);
+        Managers.Resource.Destroy(guidUnit);
+    }
+
     private IEnumerator IEBeforeCollocate()
     {
         if (guidUnit == null)
         {
-            guidUnit = Managers.Resource.Instantiate("Unit");
-            SpriteRenderer sprite = guidUnit.GetComponentInChildren<SpriteRenderer>();
-            Color color = sprite.color;
-            color.a = 0.5f;
-            sprite.color = color;
+            SetGuidUnit();
         }
 
         while (true)
@@ -39,18 +56,20 @@ public class UnitController : MonoBehaviour
                 guidUnit.transform.position = dest;
             }
 
-
             if (Input.GetMouseButtonDown(0))
             {
-                transform.position = guidUnit.transform.position;
-                Managers.Resource.Destroy(guidUnit);
-                yield break;
+                if (!hit.collider.gameObject.GetComponent<Tile>().IsEmpty)
+                {
+                    Tile tile = hit.collider.GetComponent<Tile>();
+                    tile.SetIsEmpty();
+                    Collocate();
+                    yield break;
+                }
             }
 
             if (Input.GetMouseButtonDown(1))
             {
-                Managers.Resource.Destroy(gameObject);
-                Managers.Resource.Destroy(guidUnit);
+                CancelCollocate();
             }
 
             yield return null;
