@@ -53,6 +53,8 @@ public class UnitController : BaseController
         guidUnit = null;
     }
 
+    
+
     protected override void UpdateSkill()
     {
         _attackDelay += Time.deltaTime;
@@ -91,12 +93,20 @@ public class UnitController : BaseController
 
             if (Input.GetMouseButtonDown(0))
             {
-                if (!hit.collider.gameObject.GetComponent<Tile>().IsEmpty)
+                if (hit.collider == null)
                 {
-                    Tile = hit.collider.GetComponent<Tile>();
-                    Tile.SetIsEmpty();
-                    Collocate();
-                    yield break;
+                    Debug.Log("잘못 된 배치 입니다.");
+                    CancelCollocate();
+                }
+                else
+                {
+                    if (!hit.collider.gameObject.GetComponent<Tile>().IsEmpty)
+                    {
+                        Tile = hit.collider.GetComponent<Tile>();
+                        Tile.SetIsEmpty();
+                        Collocate();
+                        yield break;
+                    }
                 }
             }
 

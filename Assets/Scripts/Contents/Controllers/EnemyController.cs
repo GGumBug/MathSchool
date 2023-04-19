@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class EnemyController : BaseController
 {
+    private float _skillDelay = 0;
+
     private Vector3[] SpawnPos = new Vector3[3];
-    public Coroutine CoAttack {get; private set;}
 
     private EnemyStat _stat;
 
@@ -30,12 +31,8 @@ public class EnemyController : BaseController
         if (collision.gameObject.CompareTag("Unit"))
         {
             Debug.Log("Enter");
+            LockTarget = collision.gameObject.GetComponent<Stat>();
             State = Define.State.Skill;
-            UnitStat unitStat = collision.gameObject.GetComponent<UnitStat>();
-
-            if (CoAttack != null)
-                StopCoroutine(CoAttack);
-            CoAttack = StartCoroutine(IEOnAttacked(unitStat, _stat.AtkDelay));
         }
     }
 
@@ -43,8 +40,9 @@ public class EnemyController : BaseController
     {
         if (collision.gameObject.CompareTag("Unit"))
         {
-            StopCoroutine(CoAttack);
             Debug.Log("Exit");
+            LockTarget = null;
+            _skillDelay = 0;
             State = Define.State.Move;
         }
     }
@@ -70,14 +68,17 @@ public class EnemyController : BaseController
         transform.position += Vector3.left * Time.deltaTime * _stat.MoveSpeed;
     }
 
-    private IEnumerator IEOnAttacked(UnitStat unitStat, float delay)
+    protected override void UpdateSkill()
     {
-        yield return new WaitForSeconds(delay);
-        unitStat.OnAttacked(_stat);
-        Debug.Log(-_stat.Atk);
-
-
-        StopCoroutine(CoAttack);
-        CoAttack = StartCoroutine(IEOnAttacked(unitStat, _stat.AtkDelay));
+        _skillDelay += Time.deltaTime;
+        if (_skillDelay >= _stat.AtkDelay)
+        {
+            if (LockTarget != null)
+            {
+                LockTarget.OnAttacked(_stat);
+                Debug.Log(_stat.Atk);
+            }
+            _skillDelay = 0;
+        }
     }
 }

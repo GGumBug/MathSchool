@@ -39,8 +39,8 @@ public class Stat : MonoBehaviour
         // 유닛이 죽을때 로직
         if (enemyStat != null)
         {
-            UnitController unit = gameObject.GetComponent<UnitController>();
-            unit.Tile.SetIsEmpty();
+                UnitController unit = gameObject.GetComponent<UnitController>();
+                unit.Tile.SetIsEmpty();
         }
 
         Managers.Resource.Destroy(gameObject);

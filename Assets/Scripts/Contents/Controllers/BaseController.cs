@@ -4,6 +4,8 @@ using UnityEngine;
 
 public abstract class BaseController : MonoBehaviour
 {
+    public Stat LockTarget {get; protected set;}
+
     private Define.State _state = Define.State.Idle;
 
     public virtual Define.State State 
