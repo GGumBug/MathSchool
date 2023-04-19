@@ -22,6 +22,8 @@ public class Bullet : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
+            EnemyStat stat = collision.gameObject.GetComponent<EnemyStat>();
+            stat.OnAttacked(unitStat);
             Managers.Resource.Destroy(gameObject);
         }
     }

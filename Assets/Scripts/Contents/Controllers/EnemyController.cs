@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyController : BaseController
 {
     private Vector3[] SpawnPos = new Vector3[3];
+    public Coroutine CoAttack {get; private set;}
 
     private EnemyStat _stat;
 
@@ -26,15 +27,15 @@ public class EnemyController : BaseController
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Bullet"))
-        {
-            Bullet bullet = collision.GetComponent<Bullet>();
-            _stat.OnAttacked(bullet.unitStat);
-        }
-
         if (collision.gameObject.CompareTag("Unit"))
         {
+            Debug.Log("Enter");
             State = Define.State.Skill;
+            UnitStat unitStat = collision.gameObject.GetComponent<UnitStat>();
+
+            if (CoAttack != null)
+                StopCoroutine(CoAttack);
+            CoAttack = StartCoroutine(IEOnAttacked(unitStat, _stat.AtkDelay));
         }
     }
 
@@ -42,6 +43,8 @@ public class EnemyController : BaseController
     {
         if (collision.gameObject.CompareTag("Unit"))
         {
+            StopCoroutine(CoAttack);
+            Debug.Log("Exit");
             State = Define.State.Move;
         }
     }
@@ -65,5 +68,16 @@ public class EnemyController : BaseController
     protected override void UpdateMove()
     {
         transform.position += Vector3.left * Time.deltaTime * _stat.MoveSpeed;
+    }
+
+    private IEnumerator IEOnAttacked(UnitStat unitStat, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        unitStat.OnAttacked(_stat);
+        Debug.Log(-_stat.Atk);
+
+
+        StopCoroutine(CoAttack);
+        CoAttack = StartCoroutine(IEOnAttacked(unitStat, _stat.AtkDelay));
     }
 }

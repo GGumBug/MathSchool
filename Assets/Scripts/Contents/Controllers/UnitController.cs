@@ -7,14 +7,13 @@ public class UnitController : BaseController
 {
     private float _attackDelay = 10f;
     private Color originColor;
-    
+
 
     private GameObject guidUnit = null;
     private UnitStat _stat;
 
-    public Coroutine EnemyAttacked { get; private set; }
     public Tile Tile { get; private set; }
-    
+
 
     protected override void Init()
     {
@@ -52,22 +51,6 @@ public class UnitController : BaseController
         guidUnit.GetComponentInChildren<SpriteRenderer>().color = originColor;
         Managers.Resource.Destroy(guidUnit);
         guidUnit = null;
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("Enemy"))
-        {
-            EnemyStat enemyStat = collision.GetComponent<EnemyStat>();
-            float delay = enemyStat.AtkDelay;
-
-            StartCoroutine(IEOnAttacked(enemyStat, delay));
-        }
-    }
-
-    public void EndAttacked()
-    {
-        StopCoroutine(EnemyAttacked);
     }
 
     protected override void UpdateSkill()
@@ -124,14 +107,5 @@ public class UnitController : BaseController
 
             yield return null;
         }
-    }
-
-    private IEnumerator IEOnAttacked(EnemyStat enemyStat, float delay)
-    {
-        _stat.OnAttacked(enemyStat);
-
-        yield return new WaitForSeconds(delay);
-
-        EnemyAttacked = StartCoroutine(IEOnAttacked(enemyStat, delay));
     }
 }

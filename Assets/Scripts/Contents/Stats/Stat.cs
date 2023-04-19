@@ -28,19 +28,19 @@ public class Stat : MonoBehaviour
     protected virtual void OnDead(Stat attacker)
     {
         UnitStat unitStat = attacker as UnitStat;
+        // 적이 죽을때 로직
         if (unitStat != null)
         {
             // 수학에너지를 보너스로 받는 로직
             gameObject.GetComponent<EnemyStat>().ResetStat();
-            unitStat.GetComponent<UnitController>().EndAttacked();
         }
 
         EnemyStat enemyStat = attacker as EnemyStat;
+        // 유닛이 죽을때 로직
         if (enemyStat != null)
         {
             UnitController unit = gameObject.GetComponent<UnitController>();
             unit.Tile.SetIsEmpty();
-            unit.EndAttacked();
         }
 
         Managers.Resource.Destroy(gameObject);
