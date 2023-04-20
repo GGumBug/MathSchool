@@ -5,6 +5,8 @@ using UnityEngine;
 public class Stat : MonoBehaviour
 {
     [field: SerializeField]
+    public int Level { get; protected set; }
+    [field: SerializeField]
     public string Name { get; protected set; }
     [field: SerializeField]
     public int Hp { get; protected set; }

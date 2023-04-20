@@ -2,7 +2,7 @@
   "stats": [
     {
       "level": "1",
-      "name": "sharp",
+      "name": "Sharp",
       "hp": "50",
       "maxHp": "50",
       "atk": "7",
@@ -11,7 +11,7 @@
     },
     {
       "level": "2",
-      "name": "sharp",
+      "name": "Sharp",
       "hp": "60",
       "maxHp": "60",
       "atk": "12",
@@ -20,7 +20,7 @@
     },
     {
       "level": "3",
-      "name": "sharp",
+      "name": "Sharp",
       "hp": "100",
       "maxHp": "100",
       "atk": "22",

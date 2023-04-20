@@ -2,7 +2,7 @@
   "stats": [
     {
       "level": "1",
-      "name": "pencil",
+      "name": "Pencil",
       "hp": "50",
       "maxHp": "50",
       "atk": "10",
@@ -11,7 +11,7 @@
     },
     {
       "level": "2",
-      "name": "pencil",
+      "name": "Pencil",
       "hp": "75",
       "maxHp": "75",
       "atk": "15",
@@ -20,7 +20,7 @@
     },
     {
       "level": "3",
-      "name": "pencil",
+      "name": "Pencil",
       "hp": "100",
       "maxHp": "100",
       "atk": "25",

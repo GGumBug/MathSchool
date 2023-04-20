@@ -2,7 +2,7 @@
   "stats": [
     {
       "level": "1",
-      "name": "eraser",
+      "name": "Eraser",
       "hp": "200",
       "maxHp": "200",
       "atk": "0",
@@ -11,7 +11,7 @@
     },
     {
       "level": "2",
-      "name": "eraser",
+      "name": "Eraser",
       "hp": "300",
       "maxHp": "300",
       "atk": "0",
@@ -20,7 +20,7 @@
     },
     {
       "level": "3",
-      "name": "eraser",
+      "name": "Eraser",
       "hp": "500",
       "maxHp": "500",
       "atk": "0",
