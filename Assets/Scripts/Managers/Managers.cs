@@ -9,17 +9,27 @@ public class Managers : MonoBehaviour
     private static Managers Instance { get { Init(); return s_Instance; } }
     #endregion
 
+    #region Content
+    private GameManager             _game = new GameManager();
+
+    public static GameManager       Game { get { return Instance._game; } }
+    #endregion
+
+    #region Core
     private ResourceManager         _resource = new ResourceManager();
     private UIManager               _ui = new UIManager();
     private PoolManager             _pool = new PoolManager();
     private ScenesManager           _scene = new ScenesManager();
+    private DataManager             _data = new DataManager();
 
     public static ResourceManager   Resource { get { return Instance._resource; } }
     public static UIManager         UI { get { return Instance._ui; } }
     public static PoolManager       Pool { get { return Instance._pool; } }
     public static ScenesManager     Scene { get { return Instance._scene; } }
+    public static DataManager      Data { get { return Instance._data; } }
+    #endregion
 
-    private void Awake()
+    private void Start()
     {
         Init();
     }
@@ -36,9 +46,11 @@ public class Managers : MonoBehaviour
             }
             DontDestroyOnLoad(go);
             s_Instance = go.GetComponent<Managers>();
-        }
 
-        s_Instance._pool.Init();
+            s_Instance._pool.Init();
+            s_Instance._game.Init();
+            s_Instance._data.Init();
+        }
     }
 
     public static void Clear()

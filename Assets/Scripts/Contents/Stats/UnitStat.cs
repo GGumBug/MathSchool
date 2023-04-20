@@ -11,6 +11,7 @@ public class UnitStat : Stat
 
     private void Start()
     {
+        Name = "Pencle";
         Hp = 50;
         MaxHp = 50;
         Atk = 10;

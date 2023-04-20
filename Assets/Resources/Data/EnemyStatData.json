@@ -1,0 +1,31 @@
+{
+  "stats": [
+    {
+      "level": "1",
+      "name": "kid",
+      "hp": "50",
+      "maxHp": "50",
+      "atk": "10",
+      "atkDelay": "2f",
+      "moveSpeed": "5f"
+    },
+    {
+      "level": "2",
+      "name": "adult",
+      "hp": "100",
+      "maxHp": "100",
+      "atk": "15",
+      "atkDelay": "1.5f",
+      "moveSpeed": "5f"
+    },
+    {
+      "level": "3",
+      "name": "tiger",
+      "hp": "200",
+      "maxHp": "200",
+      "atk": "25",
+      "atkDelay": "1f",
+      "moveSpeed": "5f"
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "stats": [
+    {
+      "level": "1",
+      "name": "sharp",
+      "hp": "50",
+      "maxHp": "50",
+      "atk": "7",
+      "atkDelay": "1.5f",
+      "price": "20"
+    },
+    {
+      "level": "2",
+      "name": "sharp",
+      "hp": "60",
+      "maxHp": "60",
+      "atk": "12",
+      "atkDelay": "1f",
+      "price": "20"
+    },
+    {
+      "level": "3",
+      "name": "sharp",
+      "hp": "100",
+      "maxHp": "100",
+      "atk": "22",
+      "atkDelay": "0.7f",
+      "price": "20"
+    }
+  ]
+}

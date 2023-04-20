@@ -8,7 +8,6 @@ public class UI_Game : UI_Scene
     enum GameObjects
     {
         UnitPanel,
-        Button,
         Button_1
     }
 

@@ -18,4 +18,11 @@ public class Define : MonoBehaviour
         Move,
         Skill
     }
+
+    public enum Unit
+    {
+        Pencil,
+        Sharp,
+        Eraser
+    }
 }

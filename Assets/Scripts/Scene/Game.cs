@@ -14,6 +14,9 @@ public class Game : BaseScene
         tileSpawner.SpwanTile();
 
         Managers.UI.ShowSceneUI<UI_Game>();
+
+        //Data.Pencil pencilStat = Managers.Data.pencilStatDict[2];
+        //Debug.Log(pencilStat.atk);
     }
 
     public override void Clear()

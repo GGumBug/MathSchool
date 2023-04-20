@@ -1,0 +1,31 @@
+{
+  "stats": [
+    {
+      "level": "1",
+      "name": "eraser",
+      "hp": "200",
+      "maxHp": "200",
+      "atk": "0",
+      "atkDelay": "0",
+      "price": "30"
+    },
+    {
+      "level": "2",
+      "name": "eraser",
+      "hp": "300",
+      "maxHp": "300",
+      "atk": "0",
+      "atkDelay": "0",
+      "price": "30"
+    },
+    {
+      "level": "3",
+      "name": "eraser",
+      "hp": "500",
+      "maxHp": "500",
+      "atk": "0",
+      "atkDelay": "0",
+      "price": "30"
+    }
+  ]
+}

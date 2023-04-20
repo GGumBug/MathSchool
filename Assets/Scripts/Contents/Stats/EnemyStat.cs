@@ -9,6 +9,7 @@ public class EnemyStat : Stat
 
     private void Start()
     {
+        Name = "Kid";
         Hp = 50;
         MaxHp = 50;
         Atk = 10;
