@@ -5,12 +5,13 @@ using UnityEngine.EventSystems;
 
 public class UnitController : BaseController
 {
-    private float _attackDelay = 10f;
+    private float _attackDelay = 0f;
     private Color originColor;
 
 
     private GameObject guidUnit = null;
     private UnitStat _stat;
+    private AttackRange attackRange = null;
 
     public Tile Tile { get; private set; }
 
@@ -18,6 +19,13 @@ public class UnitController : BaseController
     protected override void Init()
     {
         _stat = GetComponent<UnitStat>();
+        attackRange = gameObject.GetComponentInChildren<AttackRange>();
+        if (attackRange == null)
+        {
+            Debug.Log("null");
+        }
+        attackRange.startAttackEvent += StartAttack;
+        attackRange.stopAttackEvent += StopAttack;
     }
 
     public void BeforeCollocate()
@@ -41,8 +49,7 @@ public class UnitController : BaseController
         guidUnit.GetComponentInChildren<SpriteRenderer>().color = originColor;
         Managers.Resource.Destroy(guidUnit);
 
-        // 일단 공격하게 테스트
-        State = Define.State.Skill;
+        State = Define.State.Idle;
     }
 
     private void CancelCollocate()
@@ -53,7 +60,17 @@ public class UnitController : BaseController
         guidUnit = null;
     }
 
-    
+    private void StartAttack()
+    {
+        State = Define.State.Skill;
+        _attackDelay = _stat.AtkDelay;
+    }
+
+    private void StopAttack()
+    {
+        State = Define.State.Idle;
+        _attackDelay = _stat.AtkDelay;
+    }
 
     protected override void UpdateSkill()
     {

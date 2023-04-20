@@ -11,11 +11,13 @@ public class Managers : MonoBehaviour
 
     private ResourceManager         _resource = new ResourceManager();
     private UIManager               _ui = new UIManager();
-    private PoolManager              _pool = new PoolManager();
+    private PoolManager             _pool = new PoolManager();
+    private ScenesManager           _scene = new ScenesManager();
 
     public static ResourceManager   Resource { get { return Instance._resource; } }
     public static UIManager         UI { get { return Instance._ui; } }
-    public static PoolManager        Pool { get { return Instance._pool; } }
+    public static PoolManager       Pool { get { return Instance._pool; } }
+    public static ScenesManager     Scene { get { return Instance._scene; } }
 
     private void Awake()
     {
@@ -39,9 +41,10 @@ public class Managers : MonoBehaviour
         s_Instance._pool.Init();
     }
 
-    public void Clear()
+    public static void Clear()
     {
         UI.Clear();
         Pool.Clear();
+        Scene.Clear();
     }
 }

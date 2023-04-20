@@ -59,6 +59,8 @@ public class PoolManager
             poolable.gameObject.SetActive(true);
 
             //DonDestoryOnLoad 해제 코드 추가
+            if (parent == null)
+                poolable.transform.parent = Managers.Scene.CurrentScene.transform;
 
             poolable.transform.parent = parent;
             poolable.isUsing = true;
