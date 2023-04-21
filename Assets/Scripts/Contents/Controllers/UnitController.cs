@@ -5,12 +5,12 @@ using UnityEngine.EventSystems;
 
 public class UnitController : BaseController
 {
-    private float _attackDelay = 0f;
+    protected float _attackDelay = 0f;
     private Color originColor;
 
 
     private GameObject guidUnit = null;
-    private UnitStat _stat;
+    protected UnitStat _stat;
     private AttackRange attackRange = null;
 
     public Tile Tile { get; private set; }
@@ -28,14 +28,14 @@ public class UnitController : BaseController
         attackRange.stopAttackEvent += StopAttack;
     }
 
-    public void BeforeCollocate()
+    public void BeforeCollocate(string path)
     {
-        StartCoroutine("IEBeforeCollocate");
+        StartCoroutine(IEBeforeCollocate(path));
     }
 
-    private void SetGuidUnit()
+    private void SetGuidUnit(string path)
     {
-        guidUnit = Managers.Resource.Instantiate("Unit");
+        guidUnit = Managers.Resource.Instantiate(path);
         SpriteRenderer sprite = guidUnit.GetComponentInChildren<SpriteRenderer>();
         originColor = sprite.color;
         Color color = sprite.color;
@@ -72,24 +72,11 @@ public class UnitController : BaseController
         _attackDelay = _stat.AtkDelay;
     }
 
-    protected override void UpdateSkill()
-    {
-        _attackDelay += Time.deltaTime;
-        if (_attackDelay >= _stat.AtkDelay)
-        {
-            GameObject go = Managers.Resource.Instantiate("Bullet");
-            Bullet bullet = go.GetComponentInChildren<Bullet>();
-            bullet.transform.position = transform.position;
-            bullet.SetStat(_stat);
-            _attackDelay = 0;
-        }
-    }
-
-    private IEnumerator IEBeforeCollocate()
+    private IEnumerator IEBeforeCollocate(string path)
     {
         if (guidUnit == null)
         {
-            SetGuidUnit();
+            SetGuidUnit(path);
         }
 
         while (true)

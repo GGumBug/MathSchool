@@ -10,9 +10,9 @@ public interface ILoader<Key, Value>
 
 public class DataManager
 {
+    public List<string> UnitNames = new List<string>();
     public Dictionary<string, Dictionary<int, Data.Unit>> UnitStatDict { get; private set; } = new Dictionary<string, Dictionary<int, Data.Unit>>();
     public Dictionary<int, Data.Enemy> EnemyStatDict { get; private set; } = new Dictionary<int, Data.Enemy>();
-    public Dictionary<int, Data.Kid> KidStatDict { get; private set; } = new Dictionary<int, Data.Kid>();
 
 
     public void Init()
@@ -30,6 +30,7 @@ public class DataManager
         for (int i = 0; i < names.Length; i++)
         {
             string name = names[i];
+            UnitNames.Add(name);
             statDict = LoaderJson<Data.UnitStatData<Data.Unit>, int, Data.Unit>($"{name}StatData").MakeDict();
             UnitStatDict.Add(statDict[1].name, statDict);
         }

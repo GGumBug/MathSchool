@@ -10,7 +10,7 @@ public abstract class UI_Base : MonoBehaviour
 
     public abstract void Init();
 
-    private void Start()
+    private void Awake()
     {
         Init();
     }
@@ -30,7 +30,7 @@ public abstract class UI_Base : MonoBehaviour
                 objects[i] = Util.FindChild<T>(gameObject, names[i], true);
 
             if (objects[i] == null)
-                Debug.Log($"Failed to bind!({name[i]})");
+                Debug.Log($"Failed to bind!({names[i]})");
         }
     }
 

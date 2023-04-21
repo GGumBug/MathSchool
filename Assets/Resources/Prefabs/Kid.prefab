@@ -93,13 +93,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3799217657869628378}
-  - component: {fileID: 596318971135449724}
   - component: {fileID: -2934215060657087179}
+  - component: {fileID: 8713453689372225458}
   - component: {fileID: 6164804116561103770}
   - component: {fileID: 265027092136012044}
   - component: {fileID: 2133817463714903440}
   m_Layer: 0
-  m_Name: Enemy
+  m_Name: Kid
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -121,23 +121,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &596318971135449724
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3799217657869628379}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2817cdf1b52af244eaf5779c6f365ddb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <Hp>k__BackingField: 0
-  <MaxHp>k__BackingField: 0
-  <Atk>k__BackingField: 0
-  <AtkDelay>k__BackingField: 0
-  <MoveSpeed>k__BackingField: 0
 --- !u!114 &-2934215060657087179
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -151,6 +134,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isUsing: 0
+--- !u!114 &8713453689372225458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3799217657869628379}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9413420660b2a14ebb3de7282c49dc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Level>k__BackingField: 0
+  <Name>k__BackingField: 
+  <Hp>k__BackingField: 0
+  <MaxHp>k__BackingField: 0
+  <Atk>k__BackingField: 0
+  <AtkDelay>k__BackingField: 0
+  <MoveSpeed>k__BackingField: 0
 --- !u!114 &6164804116561103770
 MonoBehaviour:
   m_ObjectHideFlags: 0

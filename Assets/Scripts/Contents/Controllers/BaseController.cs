@@ -15,7 +15,7 @@ public abstract class BaseController : MonoBehaviour
         {
             _state = value;
 
-            Animator anim = GetComponent<Animator>();
+            Animator anim = GetComponentInChildren<Animator>();
             switch (_state)
             {
                 case Define.State.Die:
@@ -23,6 +23,7 @@ public abstract class BaseController : MonoBehaviour
                 case Define.State.Move:
                     break;
                 case Define.State.Idle:
+                    anim.CrossFade("IDLE", 0.1f);
                     break;
                 case Define.State.Skill:
                     break;

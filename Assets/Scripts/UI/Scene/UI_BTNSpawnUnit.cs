@@ -2,20 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class UI_BTNSpawnUnit : UI_Scene
 {
-    private Button  btn_SpawnUnit;
-    private Image   unitIcon;
+    public Image UnitIcon { get; private set; }
+    public TextMeshProUGUI UnitName { get; private set; }
 
     enum Texts
     {
         UnitName
-    }
-
-    enum Buttons
-    {
-        BTN_SpawnUnit
     }
 
     enum Images
@@ -25,13 +21,27 @@ public class UI_BTNSpawnUnit : UI_Scene
 
     public override void Init()
     {
-        base.Init();
-
-        Bind<Button>(typeof(Buttons));
-        Bind<Text>(typeof(Texts));
+        Bind<TextMeshProUGUI>(typeof(Texts));
         Bind<Image>(typeof(Images));
 
-        unitIcon = Get<Image>((int)Images.UnitIcon);
+        UnitIcon = Get<Image>((int)Images.UnitIcon);
+        UnitName = Get<TextMeshProUGUI>((int)Texts.UnitName);
         // 유닛 데이터와 연동작업후에 다시 작업 시작
+    }
+
+    public void SetName(string name)
+    {
+        if (UnitName== null)
+        {
+            Debug.Log("NULL");
+            return;
+        }
+
+        UnitName.text = name;
+    }
+
+    public void SetImage(Sprite sprite)
+    {
+        UnitIcon.sprite = sprite;
     }
 }
