@@ -36,11 +36,13 @@ public class UnitController : BaseController
     private void SetGuidUnit(string path)
     {
         guidUnit = Managers.Resource.Instantiate(path);
-        SpriteRenderer sprite = guidUnit.GetComponentInChildren<SpriteRenderer>();
-        originColor = sprite.color;
-        Color color = sprite.color;
+        SpriteRenderer[] sprites= guidUnit.GetComponentsInChildren<SpriteRenderer>();
+        Color color = Color.white;
         color.a = 0.5f;
-        sprite.color = color;
+        for (int i = 0; i < sprites.Length; i++)
+        {
+            sprites[i].color = color;
+        }
     }
 
     private void Collocate()

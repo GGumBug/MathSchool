@@ -30,9 +30,8 @@ public class EnemyController : BaseController
     {
         if (collision.gameObject.CompareTag("Unit"))
         {
-            Debug.Log("Enter");
             LockTarget = collision.gameObject.GetComponent<Stat>();
-            State = Define.State.Skill;
+            State = Define.State.Idle;
         }
     }
 
@@ -40,7 +39,6 @@ public class EnemyController : BaseController
     {
         if (collision.gameObject.CompareTag("Unit"))
         {
-            Debug.Log("Exit");
             LockTarget = null;
             _skillDelay = 0;
             State = Define.State.Move;
@@ -68,7 +66,7 @@ public class EnemyController : BaseController
         transform.position += Vector3.left * Time.deltaTime * _stat.MoveSpeed;
     }
 
-    protected override void UpdateSkill()
+    protected override void UpdateIdle()
     {
         _skillDelay += Time.deltaTime;
         if (_skillDelay >= _stat.AtkDelay)
@@ -78,6 +76,8 @@ public class EnemyController : BaseController
                 LockTarget.OnAttacked(_stat);
                 Debug.Log(_stat.Atk);
             }
+            Animator anim = GetComponentInChildren<Animator>();
+            anim.CrossFade("ATTACK", 0.1f);
             _skillDelay = 0;
         }
     }

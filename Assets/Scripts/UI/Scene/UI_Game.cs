@@ -54,5 +54,7 @@ public class UI_Game : UI_Scene
     public void SpawnEnemy()
     {
         Managers.Resource.Instantiate("Kid");
+        Managers.Resource.Instantiate("Adult");
+        Managers.Resource.Instantiate("Tiger");
     }
 }

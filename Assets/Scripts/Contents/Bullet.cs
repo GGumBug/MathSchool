@@ -7,6 +7,8 @@ public class Bullet : MonoBehaviour
     private float _speed = 10f;
     public UnitStat unitStat { get; private set; }
 
+    private bool hasTriggered = false;
+
     private void OnEnable()
     {
         StopCoroutine("IEDestroy");
@@ -22,9 +24,14 @@ public class Bullet : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            EnemyStat stat = collision.gameObject.GetComponent<EnemyStat>();
-            stat.OnAttacked(unitStat);
+            if (!hasTriggered)
+            {
+                EnemyStat stat = collision.gameObject.GetComponent<EnemyStat>();
+                stat.OnAttacked(unitStat);
+            }
+            hasTriggered = true;
             Managers.Resource.Destroy(gameObject);
+            hasTriggered = false;
         }
     }
 
