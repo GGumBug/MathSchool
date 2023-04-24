@@ -46,7 +46,7 @@ public class Bullet : MonoBehaviour
 
     private IEnumerator IEDestroy()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
 
         Managers.Resource.Destroy(gameObject);
     }

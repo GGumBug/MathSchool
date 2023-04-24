@@ -8,11 +8,12 @@ public class UI_Game : UI_Scene
 {
     GameObject unitPanel;
     TextMeshProUGUI txtMathEnergy;
+    Slider stageGauge;
 
     enum GameObjects
     {
         UnitPanel,
-        Button_1
+        Slider_StageGauge
     }
 
     enum Texts
@@ -31,8 +32,7 @@ public class UI_Game : UI_Scene
 
         txtMathEnergy = GetTextMeshProUGUI((int)Texts.Text_MathEnegy);
 
-        Button button = GetGameObject((int)GameObjects.Button_1).GetComponent<Button>();
-        button.onClick.AddListener(SpawnEnemy);
+        stageGauge = GetGameObject((int)GameObjects.Slider_StageGauge).GetComponent<Slider>();
         MakeSpwanUnitButton();
     }
 
@@ -80,15 +80,20 @@ public class UI_Game : UI_Scene
         }
     }
 
-    public void SpawnEnemy()
-    {
-        Managers.Resource.Instantiate("Kid");
-        Managers.Resource.Instantiate("Adult");
-        Managers.Resource.Instantiate("Tiger");
-    }
-
     public void SetTextMathEnergy(PlayerController player)
     {
         txtMathEnergy.text = player.MathEnergy.ToString();
+    }
+
+    public void SetStageGauge(float maxValue, float value)
+    {
+        stageGauge.maxValue = maxValue;
+        stageGauge.value = value;
+    }
+
+    public void StageGaugeChangeColor(Color color)
+    {
+        Image fill = stageGauge.fillRect.GetComponent<Image>();
+        fill.color = color;
     }
 }

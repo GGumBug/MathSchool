@@ -1,0 +1,52 @@
+{
+  "stages": [
+    {
+      "stageLevel": "1",
+      "maxEnemyCount": "20",
+      "feverEnemyCount": "10",
+      "nomalEnemy": "Kid",
+      "highEnemy": "Kid",
+      "eliteEnemy": "Kid"
+    },
+    {
+      "stageLevel": "2",
+      "maxEnemyCount": "30",
+      "feverEnemyCount": "15",
+      "nomalEnemy": "Kid",
+      "highEnemy": "Kid",
+      "eliteEnemy": "Kid"
+    },
+    {
+      "stageLevel": "3",
+      "maxEnemyCount": "20",
+      "feverEnemyCount": "15",
+      "nomalEnemy": "Kid",
+      "highEnemy": "Kid",
+      "eliteEnemy": "Adult"
+    },
+    {
+      "stageLevel": "4",
+      "maxEnemyCount": "30",
+      "feverEnemyCount": "15",
+      "nomalEnemy": "Kid",
+      "highEnemy": "Adult",
+      "eliteEnemy": "Adult"
+    },
+    {
+      "stageLevel": "5",
+      "maxEnemyCount": "20",
+      "feverEnemyCount": "20",
+      "nomalEnemy": "Kid",
+      "highEnemy": "Adult",
+      "eliteEnemy": "Tiger"
+    },
+    {
+      "stageLevel": "6",
+      "maxEnemyCount": "30",
+      "feverEnemyCount": "20",
+      "nomalEnemy": "Adult",
+      "highEnemy": "Adult",
+      "eliteEnemy": "Tiger"
+    }
+  ]
+}

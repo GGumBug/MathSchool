@@ -10,6 +10,7 @@ public interface ILoader<Key, Value>
 
 public class DataManager
 {
+    public Dictionary<int, Data.Stage> StageDict { get; private set; } = new Dictionary<int, Data.Stage>();
     public List<string> UnitNames = new List<string>();
     public Dictionary<string, Dictionary<int, Data.Unit>> UnitStatDict { get; private set; } = new Dictionary<string, Dictionary<int, Data.Unit>>();
     public Dictionary<int, Data.Enemy> EnemyStatDict { get; private set; } = new Dictionary<int, Data.Enemy>();
@@ -17,6 +18,7 @@ public class DataManager
 
     public void Init()
     {
+        StageDict = LoaderJson<Data.StageStatData<Data.Stage>, int, Data.Stage>($"StageData").MakeDict();
         UnitStatLoader(typeof(Define.Unit));
         EnemyStatDict = LoaderJson<Data.EnemyStatData<Data.Enemy>, int, Data.Enemy>($"EnemyStatData").MakeDict();
     }

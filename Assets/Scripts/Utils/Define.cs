@@ -25,4 +25,11 @@ public class Define : MonoBehaviour
         Sharp,
         Eraser
     }
+
+    public enum GameMode
+    {
+        Nomal,
+        Fever,
+        Clear
+    }
 }
