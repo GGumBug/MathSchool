@@ -28,9 +28,9 @@ public class UnitController : BaseController
         attackRange.stopAttackEvent += StopAttack;
     }
 
-    public void BeforeCollocate(string path)
+    public void BeforeCollocate(string path, int price)
     {
-        StartCoroutine(IEBeforeCollocate(path));
+        StartCoroutine(IEBeforeCollocate(path, price));
     }
 
     private void SetGuidUnit(string path)
@@ -45,11 +45,15 @@ public class UnitController : BaseController
         }
     }
 
-    private void Collocate()
+    private void Collocate(int price)
     {
         transform.position = guidUnit.transform.position;
         guidUnit.GetComponentInChildren<SpriteRenderer>().color = originColor;
         Managers.Resource.Destroy(guidUnit);
+        PlayerController player = Managers.Game.GetPlayer();
+        player.UseMathEnergy(price);
+        UI_Game uI_Game = Managers.UI.uI_Scene as UI_Game;
+        uI_Game.SetTextMathEnergy(player);
 
         State = Define.State.Idle;
     }
@@ -74,7 +78,7 @@ public class UnitController : BaseController
         _attackDelay = _stat.AtkDelay;
     }
 
-    private IEnumerator IEBeforeCollocate(string path)
+    private IEnumerator IEBeforeCollocate(string path, int price)
     {
         if (guidUnit == null)
         {
@@ -110,7 +114,7 @@ public class UnitController : BaseController
                     {
                         Tile = hit.collider.GetComponent<Tile>();
                         Tile.SetIsEmpty();
-                        Collocate();
+                        Collocate(price);
                         yield break;
                     }
                 }

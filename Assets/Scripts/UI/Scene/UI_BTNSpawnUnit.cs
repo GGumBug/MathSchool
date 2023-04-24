@@ -7,13 +7,15 @@ using TMPro;
 public class UI_BTNSpawnUnit : UI_Scene
 {
     public Image UnitIcon { get; private set; }
-    public TextMeshProUGUI UnitName { get; private set; }
+    public TextMeshProUGUI txt_UnitName { get; private set; }
+    public TextMeshProUGUI txt_UnitPrice { get; private set; }
 
     private Vector2 desiredSize = new Vector2( 1f, 1f );
 
     enum Texts
     {
-        UnitName
+        Text_UnitName,
+        Text_UnitPrice
     }
 
     enum Images
@@ -27,18 +29,19 @@ public class UI_BTNSpawnUnit : UI_Scene
         Bind<Image>(typeof(Images));
 
         UnitIcon = Get<Image>((int)Images.UnitIcon);
-        UnitName = Get<TextMeshProUGUI>((int)Texts.UnitName);
+        txt_UnitName = GetTextMeshProUGUI((int)Texts.Text_UnitName);
+        txt_UnitPrice = GetTextMeshProUGUI((int)Texts.Text_UnitPrice);
     }
 
     public void SetName(string name)
     {
-        if (UnitName== null)
+        if (txt_UnitName == null)
         {
             Debug.Log("NULL");
             return;
         }
 
-        UnitName.text = name;
+        txt_UnitName.text = name;
     }
 
     // Sprite 종횡비를 유지하며 불러온다.
@@ -55,5 +58,10 @@ public class UI_BTNSpawnUnit : UI_Scene
 
         UnitIcon.sprite = sprite;
         UnitIcon.transform.localScale = new Vector3(size.x, size.y, 1);
+    }
+
+    public void SetPrice(int price)
+    {
+        txt_UnitPrice.text = price.ToString();
     }
 }

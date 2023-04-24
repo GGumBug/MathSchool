@@ -5,6 +5,7 @@ using UnityEngine;
 public class Game : BaseScene
 {
     private TileSpawner tileSpawner;
+    private UI_Game ui_Game;
 
     protected override void Init()
     {
@@ -14,9 +15,11 @@ public class Game : BaseScene
         tileSpawner.SpwanTile();
 
         Managers.UI.ShowSceneUI<UI_Game>();
+        ui_Game = Managers.UI.uI_Scene as UI_Game;
 
-        //Data.Pencil pencilStat = Managers.Data.pencilStatDict[2];
-        //Debug.Log(pencilStat.atk);
+        PlayerController player = Managers.Game.GetPlayer();
+        player.SetStartEnergy();
+        ui_Game.SetTextMathEnergy(player);
     }
 
     public override void Clear()

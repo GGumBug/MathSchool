@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 using System;
 
 public abstract class UI_Base : MonoBehaviour
@@ -45,7 +46,7 @@ public abstract class UI_Base : MonoBehaviour
     }
 
     protected GameObject GetGameObject(int index) { return Get<GameObject>(index); }
-    protected Text GetText(int index) { return Get<Text>(index); }
+    protected TextMeshProUGUI GetTextMeshProUGUI(int index) { return Get<TextMeshProUGUI>(index); }
     protected Button GetButton(int index) { return Get<Button>(index); }
     protected Image GetImage(int index) { return Get<Image>(index); }
 }

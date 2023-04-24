@@ -8,6 +8,8 @@ public class EnemyStat : Stat
 
     [field: SerializeField]
     public float MoveSpeed { get; protected set; }
+    [field: SerializeField]
+    public int Value { get; protected set; }
 
     protected void SetStat()
     {
@@ -20,14 +22,15 @@ public class EnemyStat : Stat
         Atk = enemyStat.atk;
         AtkDelay = enemyStat.atkDelay;
         MoveSpeed = enemyStat.moveSpeed;
+        Value = enemyStat.value;
     }
 
-    public void ResetStat()
+    public void ResetHP()
     {
-        Hp = 50;
-        MaxHp = 50;
-        Atk = 10;
-        AtkDelay = 2f;
-        MoveSpeed = 5f;
+        enemyStats = Managers.Data.EnemyStatDict;
+        Data.Enemy enemyStat = enemyStats[Level];
+
+        Hp = enemyStat.hp;
+        MaxHp = enemyStat.maxHp;
     }
 }

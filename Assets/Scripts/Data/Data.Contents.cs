@@ -25,11 +25,7 @@ namespace Data
         public int atk;
         public float atkDelay;
         public float moveSpeed;
-    }
-
-    public class Kid : Enemy
-    {
-
+        public int value;
     }
 
     [Serializable]

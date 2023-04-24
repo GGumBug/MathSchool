@@ -36,7 +36,12 @@ public class Stat : MonoBehaviour
         if (unitStat != null)
         {
             // 수학에너지를 보너스로 받는 로직
-            gameObject.GetComponent<EnemyStat>().ResetStat();
+            EnemyStat stat = gameObject.GetComponent<EnemyStat>();
+            stat.ResetHP();
+            PlayerController player = Managers.Game.GetPlayer();
+            player.PlusMathEnerge(stat.Value);
+            UI_Game uI_Game = Managers.UI.uI_Scene as UI_Game;
+            uI_Game.SetTextMathEnergy(player);
         }
 
         EnemyStat enemyStat = attacker as EnemyStat;
