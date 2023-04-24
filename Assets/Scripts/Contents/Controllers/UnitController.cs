@@ -5,16 +5,16 @@ using UnityEngine.EventSystems;
 
 public class UnitController : BaseController
 {
-    protected float _attackDelay = 0f;
-    private Color originColor;
+    protected float     _attackDelay = 0f;
+    private Color       originColor;
 
 
-    private GameObject guidUnit = null;
-    protected UnitStat _stat;
-    private AttackRange attackRange = null;
+    private GameObject  guidUnit = null;
+    protected UnitStat  _stat;
 
-    public Tile Tile { get; private set; }
-
+    public Tile         Tile { get; private set; }
+    public AttackRange  attackRange { get; private set; } = null;
+    public bool         IsCollocating { get; protected set; } = false;
 
     protected override void Init()
     {
@@ -30,6 +30,7 @@ public class UnitController : BaseController
 
     public void BeforeCollocate(string path, int price)
     {
+        SwitchIsCollocating();
         StartCoroutine(IEBeforeCollocate(path, price));
     }
 
@@ -37,6 +38,7 @@ public class UnitController : BaseController
     {
         guidUnit = Managers.Resource.Instantiate(path);
         SpriteRenderer[] sprites= guidUnit.GetComponentsInChildren<SpriteRenderer>();
+        guidUnit.GetComponent<UnitController>().SwitchIsCollocating();
         Color color = Color.white;
         color.a = 0.5f;
         for (int i = 0; i < sprites.Length; i++)
@@ -45,8 +47,20 @@ public class UnitController : BaseController
         }
     }
 
+    public void SwitchIsCollocating()
+    {
+        if (IsCollocating == true)
+        {
+            IsCollocating = false;
+            return;
+        }
+
+        IsCollocating = true;
+    }
+
     private void Collocate(int price)
     {
+        SwitchIsCollocating();
         transform.position = guidUnit.transform.position;
         guidUnit.GetComponentInChildren<SpriteRenderer>().color = originColor;
         Managers.Resource.Destroy(guidUnit);
@@ -54,8 +68,6 @@ public class UnitController : BaseController
         player.UseMathEnergy(price);
         UI_Game uI_Game = Managers.UI.uI_Scene as UI_Game;
         uI_Game.SetTextMathEnergy(player);
-
-        State = Define.State.Idle;
     }
 
     private void CancelCollocate()

@@ -30,6 +30,10 @@ public class EnemyController : BaseController
     {
         if (collision.gameObject.CompareTag("Unit"))
         {
+            UnitController unit = collision.GetComponent<UnitController>();
+            if (unit.IsCollocating)
+                return;
+
             LockTarget = collision.gameObject.GetComponent<Stat>();
             State = Define.State.Idle;
         }
@@ -39,6 +43,9 @@ public class EnemyController : BaseController
     {
         if (collision.gameObject.CompareTag("Unit"))
         {
+            UnitController unit = collision.gameObject.GetComponent<UnitController>();
+            if (unit.IsCollocating)
+                return;
             LockTarget = null;
             _skillDelay = 0;
             State = Define.State.Move;

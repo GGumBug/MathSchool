@@ -5,10 +5,10 @@ using System;
 
 public class AttackRange : MonoBehaviour
 {
-    public Action startAttackEvent;
-    public Action stopAttackEvent;
+    public Action   startAttackEvent;
+    public Action   stopAttackEvent;
 
-    private int areaEnemyCount = 0;
+    private int     areaEnemyCount = 0;
 
     public BoxCollider2D AttackRangeCol { get; private set; }
     

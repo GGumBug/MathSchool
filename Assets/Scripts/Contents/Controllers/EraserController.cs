@@ -6,6 +6,7 @@ public class EraserController : UnitController
 {
     protected override void UpdateSkill()
     {
-
+        if (IsCollocating == true)
+            return;
     }
 }

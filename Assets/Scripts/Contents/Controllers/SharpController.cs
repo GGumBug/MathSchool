@@ -6,6 +6,9 @@ public class SharpController : UnitController
 {
     protected override void UpdateSkill()
     {
+        if (IsCollocating == true)
+            return;
+
         _attackDelay += Time.deltaTime;
         if (_attackDelay >= _stat.AtkDelay)
         {
