@@ -10,6 +10,8 @@ public class EnemyController : BaseController
 
     private EnemyStat _stat;
 
+    public bool StopAttack { get; private set; } = false;
+
     private void Awake()
     {
         SetSpawnPos();
@@ -36,6 +38,13 @@ public class EnemyController : BaseController
 
             LockTarget = collision.gameObject.GetComponent<Stat>();
             State = Define.State.Idle;
+        }
+
+        if (collision.gameObject.CompareTag("EnemyDestination"))
+        {
+            Debug.Log("EnemyEscape!");
+            State = Define.State.Idle;
+            ChangeStopAttack();
         }
     }
 
@@ -68,6 +77,17 @@ public class EnemyController : BaseController
         transform.position = SpawnPos[rand];
     }
 
+    public void ChangeStopAttack()
+    {
+        if (StopAttack == false)
+        {
+            StopAttack = true;
+            return;
+        }
+
+        StopAttack = false;
+    }
+
     protected override void UpdateMove()
     {
         transform.position += Vector3.left * Time.deltaTime * _stat.MoveSpeed;
@@ -75,6 +95,8 @@ public class EnemyController : BaseController
 
     protected override void UpdateIdle()
     {
+        if (StopAttack)
+            return;
         _skillDelay += Time.deltaTime;
         if (_skillDelay >= _stat.AtkDelay)
         {

@@ -128,6 +128,6 @@ public class StageController : MonoBehaviour
     public void MinusFieldEnemyCount()
     {
         fieldEnemyCount--;
-        fieldEnemyCount = Mathf.Max(0, fieldEnemyCount);
+        Mathf.Clamp(fieldEnemyCount, 0, totralEnemyCount);
     }
 }
