@@ -35,5 +35,6 @@ public class UI_Main : UI_Scene
     public void OpenUIPlay()
     {
         Managers.UI.ShowPopupUI<UI_Play>();
+        Managers.UI.SwitchIsUIPlayOpen();
     }
 }

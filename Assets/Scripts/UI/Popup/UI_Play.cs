@@ -8,6 +8,7 @@ public class UI_Play : UI_Popup
 {
     private GameObject stagePanel;
     private GameObject stageButtonPanel;
+    private Button button_GoToMain;
 
     enum GameObjects
     {
@@ -15,13 +16,21 @@ public class UI_Play : UI_Popup
         StageButtonPanel
     }
 
+    enum Buttons
+    {
+        Button_GoToMain
+    }
+
     public override void Init()
     {
         base.Init();
 
         Bind<GameObject>(typeof(GameObjects));
+        Bind<Button>(typeof(Buttons));
         stagePanel = GetGameObject((int)GameObjects.StagePanel);
         stageButtonPanel = GetGameObject((int)GameObjects.StageButtonPanel);
+        button_GoToMain = GetButton((int)Buttons.Button_GoToMain);
+        button_GoToMain.onClick.AddListener(GoToMain);
 
         MakeStageButton();
         StartAnimation();
@@ -50,5 +59,20 @@ public class UI_Play : UI_Popup
     private void StartAnimation()
     {
         stagePanel.transform.DOLocalMoveX(720f, 2f);
+    }
+
+    public void GoToMain()
+    {
+        float duration = 2f;
+        stagePanel.transform.DOLocalMoveX(1920f, duration);
+        StartCoroutine(IEClosePopupUI(duration));
+    }
+
+    private IEnumerator IEClosePopupUI(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+
+        Managers.UI.SwitchIsUIPlayOpen();
+        ClosePopupUI();
     }
 }

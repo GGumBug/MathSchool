@@ -19,7 +19,6 @@ public class StageController : MonoBehaviour
 
     Define.GameMode gameMode = Define.GameMode.Nomal;
 
-    [field:SerializeField]
     public int      StageLevel { get; private set; } = 5;
 
     private void Start()
