@@ -10,7 +10,6 @@ public class PlayerStat : Stat
 
     private void Awake()
     {
-        Hp = 3;
         MaxHp = 3;
         MathEnergy = 0;
     }
@@ -23,7 +22,7 @@ public class PlayerStat : Stat
     public void SetStartStat()
     {
         MathEnergy = _startEnergy;
-
+        Hp = MaxHp;
     }
 
     public void UseMathEnergy(int price)

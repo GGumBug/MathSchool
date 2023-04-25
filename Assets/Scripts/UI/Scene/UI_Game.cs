@@ -40,11 +40,9 @@ public class UI_Game : UI_Scene
 
         stageGauge = GetGameObject((int)GameObjects.Slider_StageGauge).GetComponent<Slider>();
         MakeSpwanUnitButton();
-
-        CreateHeart();
     }
 
-    private void CreateHeart()
+    public void CreateHeart()
     {
         PlayerStat player = Managers.Game.GetPlayer().gameObject.GetComponent<PlayerStat>();
         int heartCount = player.Hp;

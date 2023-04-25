@@ -7,6 +7,9 @@ public class GameManager
     private PlayerController player = null;
     private Dictionary<string, int> unitLevels = new Dictionary<string, int>();
 
+    public int UnLockStage { get; private set; } = 1;
+    public int CurrentStageLevel { get; private set; } = 1;
+
     public void Init()
     {
         CreatePlayer();
@@ -46,5 +49,15 @@ public class GameManager
     public int GetUnitLevel(string name)
     {
         return unitLevels[name];
+    }
+
+    public void NextStage()
+    {
+        UnLockStage++;
+    }
+
+    public void SetCurrentStageLevel(int index)
+    {
+        CurrentStageLevel = index;
     }
 }

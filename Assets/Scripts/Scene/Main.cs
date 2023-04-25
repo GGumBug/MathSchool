@@ -2,15 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Main : MonoBehaviour
+public class Main : BaseScene
 {
-    void Start()
+
+    protected override void Init()
     {
-        
+        base.Init();
+
+        Managers.UI.ShowSceneUI<UI_Main>();
     }
 
-    void Update()
-    {
-        
-    }
+    public override void Clear() { }
 }

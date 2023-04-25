@@ -20,6 +20,7 @@ public class Game : BaseScene
         PlayerController player = Managers.Game.GetPlayer();
         player.GetComponent<PlayerStat>().SetStartStat();
         ui_Game.SetTextMathEnergy(player);
+        ui_Game.CreateHeart();
     }
 
     public override void Clear()

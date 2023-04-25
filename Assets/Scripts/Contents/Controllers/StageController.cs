@@ -19,7 +19,8 @@ public class StageController : MonoBehaviour
 
     Define.GameMode gameMode = Define.GameMode.Nomal;
 
-    public int      StageLevel { get; private set; } = 4;
+    [field:SerializeField]
+    public int      StageLevel { get; private set; } = 5;
 
     private void Start()
     {
@@ -62,6 +63,8 @@ public class StageController : MonoBehaviour
                 {
                     isGameEnd = true;
                     GameMessage("GAME CLEAR");
+                    Managers.Game.NextStage();
+                    StartCoroutine("IEGoToMainScene");
                 }
                 break;
             case Define.GameMode.Over:
@@ -69,6 +72,7 @@ public class StageController : MonoBehaviour
                 {
                     isGameEnd = true;
                     GameMessage("GAME OVER");
+                    StartCoroutine("IEGoToMainScene");
                 }
                 break;
         }
@@ -78,6 +82,7 @@ public class StageController : MonoBehaviour
     {
         Data.Stage curStage = Managers.Data.StageDict[StageLevel];
 
+        StageLevel = Managers.Game.CurrentStageLevel;
         maxEnemyCount = curStage.maxEnemyCount;
         feverEnemyCount = curStage.feverEnemyCount;
         totralEnemyCount = maxEnemyCount + feverEnemyCount;
@@ -150,5 +155,12 @@ public class StageController : MonoBehaviour
         UI_GameMessage uI_GameMessage = Managers.UI.ShowPopupUI<UI_GameMessage>();
         uI_GameMessage.SetGameMessage(message);
         uI_GameMessage.StartTextAnimation();
+    }
+
+    private IEnumerator IEGoToMainScene()
+    {
+        yield return new WaitForSeconds(3f);
+
+        Managers.Scene.LoadScene(Define.Scene.Main);
     }
 }
