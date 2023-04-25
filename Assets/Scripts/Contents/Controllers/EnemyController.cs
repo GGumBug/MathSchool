@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class EnemyController : BaseController
 {
@@ -45,6 +46,10 @@ public class EnemyController : BaseController
             Debug.Log("EnemyEscape!");
             State = Define.State.Idle;
             ChangeStopAttack();
+            SpriteRenderer[] sprites = gameObject.GetComponentsInChildren<SpriteRenderer>();
+            float duration = 2f;
+
+            StartCoroutine(IEFadeOut(sprites, duration));
         }
     }
 
@@ -109,5 +114,23 @@ public class EnemyController : BaseController
             anim.CrossFade("ATTACK", 0.1f);
             _skillDelay = 0;
         }
+    }
+
+    private IEnumerator IEFadeOut(SpriteRenderer[] sprites ,float duration)
+    {
+        for (int i = 0; i < sprites.Length; i++)
+            sprites[i].material.DOFade(0f, duration);
+
+        yield return new WaitForSeconds(duration);
+
+        BaseScene curscene = Managers.Scene.CurrentScene;
+        curscene.gameObject.GetComponent<StageController>().MinusFieldEnemyCount();
+        _stat.ResetHP();
+
+        Managers.Resource.Destroy(gameObject);
+        ChangeStopAttack();
+        State = Define.State.Move;
+        for (int i = 0; i < sprites.Length; i++)
+            sprites[i].material.color = Color.white;
     }
 }
