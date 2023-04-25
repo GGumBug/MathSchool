@@ -72,7 +72,7 @@ public class EnemyController : BaseController
     {
         for (int i = 0; i < 3; i++)
         {
-            float yPos = 2.5f - (2.5f * i);
+            float yPos = 2.3f - (2.3f * i);
             Vector3 pos = new Vector3(10, yPos, 0);
             SpawnPos[i] = pos;
         }

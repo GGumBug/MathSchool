@@ -10,7 +10,7 @@ public class UI_BTNSpawnUnit : UI_Scene
     public TextMeshProUGUI txt_UnitName { get; private set; }
     public TextMeshProUGUI txt_UnitPrice { get; private set; }
 
-    private Vector2 desiredSize = new Vector2( 1f, 1f );
+    private Vector2 desiredSize = new Vector2( 0.8f, 0.8f );
 
     enum Texts
     {

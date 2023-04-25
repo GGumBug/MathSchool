@@ -5,7 +5,7 @@ using UnityEngine;
 public class TileSpawner : MonoBehaviour
 {
     private Vector2Int  tileCount = new Vector2Int(10, 3);
-    private Vector2     offset = new Vector2(1.7f, 1f);
+    private Vector2     offset = new Vector2(1.7f, 0.8f);
 
     public void SpwanTile()
     {
