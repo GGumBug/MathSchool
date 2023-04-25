@@ -65,7 +65,7 @@ public class UnitController : BaseController
         guidUnit.GetComponentInChildren<SpriteRenderer>().color = originColor;
         Managers.Resource.Destroy(guidUnit);
         PlayerController player = Managers.Game.GetPlayer();
-        player.UseMathEnergy(price);
+        player.GetComponent<PlayerStat>().UseMathEnergy(price);
         UI_Game uI_Game = Managers.UI.uI_Scene as UI_Game;
         uI_Game.SetTextMathEnergy(player);
     }

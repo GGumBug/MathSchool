@@ -41,7 +41,7 @@ public class Stat : MonoBehaviour
             EnemyStat stat = gameObject.GetComponent<EnemyStat>();
             stat.ResetHP();
             PlayerController player = Managers.Game.GetPlayer();
-            player.PlusMathEnerge(stat.Value);
+            player.GetComponent<PlayerStat>().PlusMathEnerge(stat.Value);
             UI_Game uI_Game = Managers.UI.uI_Scene as UI_Game;
             uI_Game.SetTextMathEnergy(player);
         }

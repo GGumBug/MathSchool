@@ -7,7 +7,6 @@ public class StageController : MonoBehaviour
     private int     stageLength = 120;
     private int     feverTimeLength = 30;
     private int     spawnCount = 0;
-    [SerializeField]
     private int     fieldEnemyCount = 0;
     private int     maxEnemyCount;
     private int     feverEnemyCount;
@@ -16,6 +15,7 @@ public class StageController : MonoBehaviour
     private float   feverSpawnDelay;
     private float   curSpawnDelay;
     private float   curfeverSpawnDelay;
+    private bool    isGameEnd;
 
     Define.GameMode gameMode = Define.GameMode.Nomal;
 
@@ -35,6 +35,7 @@ public class StageController : MonoBehaviour
                 if (spawnCount >= maxEnemyCount)
                 {
                     gameMode = Define.GameMode.Fever;
+                    GameMessage("FEVER TIME");
                     float totalEnemyCount = maxEnemyCount + feverEnemyCount;
                     UI_Game uI_Game = Managers.UI.uI_Scene as UI_Game;
                     uI_Game.StageGaugeChangeColor(Color.red);
@@ -48,18 +49,26 @@ public class StageController : MonoBehaviour
                 break;
             case Define.GameMode.Fever:
                 if (spawnCount > totralEnemyCount)
-                {
                     gameMode = Define.GameMode.Clear;
-                    if (fieldEnemyCount <= 0)
-                    {
-                        Debug.Log("GameClear");
-                    }
-                }
 
                 curfeverSpawnDelay += Time.deltaTime;
                 if (curfeverSpawnDelay >= feverSpawnDelay)
                 {
                     UpdateFever();
+                }
+                break;
+            case Define.GameMode.Clear:
+                if (fieldEnemyCount <= 0 && !isGameEnd)
+                {
+                    isGameEnd = true;
+                    GameMessage("GAME CLEAR");
+                }
+                break;
+            case Define.GameMode.Over:
+                if (!isGameEnd)
+                {
+                    isGameEnd = true;
+                    GameMessage("GAME OVER");
                 }
                 break;
         }
@@ -129,5 +138,17 @@ public class StageController : MonoBehaviour
     {
         fieldEnemyCount--;
         Mathf.Clamp(fieldEnemyCount, 0, totralEnemyCount);
+    }
+
+    public void GameOver()
+    {
+        gameMode = Define.GameMode.Over;
+    }
+
+    private void GameMessage(string message)
+    {
+        UI_GameMessage uI_GameMessage = Managers.UI.ShowPopupUI<UI_GameMessage>();
+        uI_GameMessage.SetGameMessage(message);
+        uI_GameMessage.StartTextAnimation();
     }
 }

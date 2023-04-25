@@ -30,6 +30,7 @@ public class Define : MonoBehaviour
     {
         Nomal,
         Fever,
-        Clear
+        Clear,
+        Over
     }
 }

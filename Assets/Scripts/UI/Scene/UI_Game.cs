@@ -7,12 +7,17 @@ using TMPro;
 public class UI_Game : UI_Scene
 {
     GameObject unitPanel;
+    GameObject heartPanel;
     TextMeshProUGUI txtMathEnergy;
     Slider stageGauge;
+
+
+    public Stack<GameObject> Hearts { get; private set; } = new Stack<GameObject>();
 
     enum GameObjects
     {
         UnitPanel,
+        HeartPanel,
         Slider_StageGauge
     }
 
@@ -29,11 +34,26 @@ public class UI_Game : UI_Scene
         Bind<TextMeshProUGUI>(typeof(Texts));
 
         unitPanel = GetGameObject((int)GameObjects.UnitPanel);
+        heartPanel = GetGameObject((int)GameObjects.HeartPanel);
 
         txtMathEnergy = GetTextMeshProUGUI((int)Texts.Text_MathEnegy);
 
         stageGauge = GetGameObject((int)GameObjects.Slider_StageGauge).GetComponent<Slider>();
         MakeSpwanUnitButton();
+
+        CreateHeart();
+    }
+
+    private void CreateHeart()
+    {
+        PlayerStat player = Managers.Game.GetPlayer().gameObject.GetComponent<PlayerStat>();
+        int heartCount = player.Hp;
+
+        for (int i = 0; i < heartCount; i++)
+        {
+            GameObject go = Managers.Resource.Instantiate("UI/SubItem/Image_Heart", heartPanel.transform);
+            Hearts.Push(go);
+        }
     }
 
     private void MakeSpwanUnitButton()
@@ -68,7 +88,7 @@ public class UI_Game : UI_Scene
         Dictionary<int, Data.Unit> targetUnitDict = Managers.Data.UnitStatDict[name];
         int price = targetUnitDict[level].price;
 
-        if (player.MathEnergy < price)
+        if (player.GetComponent<PlayerStat>().MathEnergy < price)
         {
             Debug.Log("수학 에너지가 부족합니다.");
             return;
@@ -82,7 +102,19 @@ public class UI_Game : UI_Scene
 
     public void SetTextMathEnergy(PlayerController player)
     {
-        txtMathEnergy.text = player.MathEnergy.ToString();
+        txtMathEnergy.text = player.GetComponent<PlayerStat>().MathEnergy.ToString();
+    }
+
+    public void MinusHeart()
+    {
+        GameObject go = Hearts.Pop();
+        Managers.Resource.Destroy(go);
+
+        PlayerStat player = Managers.Game.GetPlayer().gameObject.GetComponent<PlayerStat>();
+        player.MinusHP();
+
+        if (player.Hp <= 0)
+            Managers.Scene.CurrentScene.GetComponent<StageController>().GameOver();
     }
 
     public void SetStageGauge(float maxValue, float value)

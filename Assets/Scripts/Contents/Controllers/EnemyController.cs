@@ -43,6 +43,8 @@ public class EnemyController : BaseController
 
         if (collision.gameObject.CompareTag("EnemyDestination"))
         {
+            UI_Game uI_Game = Managers.UI.uI_Scene as UI_Game;
+            uI_Game.MinusHeart();
             Debug.Log("EnemyEscape!");
             State = Define.State.Idle;
             ChangeStopAttack();

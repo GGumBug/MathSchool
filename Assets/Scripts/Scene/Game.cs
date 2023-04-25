@@ -18,7 +18,7 @@ public class Game : BaseScene
         ui_Game = Managers.UI.uI_Scene as UI_Game;
 
         PlayerController player = Managers.Game.GetPlayer();
-        player.SetStartEnergy();
+        player.GetComponent<PlayerStat>().SetStartStat();
         ui_Game.SetTextMathEnergy(player);
     }
 
