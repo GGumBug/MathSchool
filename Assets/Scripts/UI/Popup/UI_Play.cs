@@ -72,7 +72,6 @@ public class UI_Play : UI_Popup
     {
         yield return new WaitForSeconds(duration);
 
-        Managers.UI.SwitchIsUIPlayOpen();
         ClosePopupUI();
     }
 }

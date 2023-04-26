@@ -9,8 +9,6 @@ public class UIManager
     Stack<UI_Popup> _popupStack = new Stack<UI_Popup>();
 
     public UI_Scene uI_Scene { get; private set; } = null;
-    [field:SerializeField]
-    public bool IsUIPlayOpen { get; private set; } = false;
 
     public GameObject Root
     {
@@ -102,15 +100,5 @@ public class UIManager
     {
         CloseAllPopupUI();
         uI_Scene = null;
-    }
-
-    public void SwitchIsUIPlayOpen()
-    {
-        if (!IsUIPlayOpen)
-        {
-            IsUIPlayOpen = true;
-        }
-
-        IsUIPlayOpen = false;
     }
 }
