@@ -7,7 +7,9 @@
       "maxHp": "50",
       "atk": "7",
       "atkDelay": "1.5f",
-      "price": "20"
+      "price": "20",
+      "unlockPrice": "50",
+      "levelUpPrice": "30"
     },
     {
       "level": "2",
@@ -16,7 +18,9 @@
       "maxHp": "60",
       "atk": "12",
       "atkDelay": "1f",
-      "price": "20"
+      "price": "20",
+      "unlockPrice": "50",
+      "levelUpPrice": "75"
     },
     {
       "level": "3",
@@ -25,7 +29,9 @@
       "maxHp": "100",
       "atk": "22",
       "atkDelay": "0.7f",
-      "price": "20"
+      "price": "20",
+      "unlockPrice": "50",
+      "levelUpPrice": "100"
     }
   ]
 }

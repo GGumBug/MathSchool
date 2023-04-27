@@ -7,8 +7,7 @@ public class SharpStat : UnitStat
     private void Start()
     {
         Name = "Sharp";
-        Level = 1;
 
-        SetStat();
+        SetStat(Name);
     }
 }

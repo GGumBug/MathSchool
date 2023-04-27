@@ -9,10 +9,13 @@ public class GameManager
 
     public int UnLockStage { get; private set; } = 1;
     public int CurrentStageLevel { get; private set; } = 1;
+    public List<bool> UnLockUnit { get; private set; } = new List<bool>();
+
 
     public void Init()
     {
         CreatePlayer();
+        SetUnLockUnit();
         SetUnitLevel();
     }
 
@@ -34,6 +37,28 @@ public class GameManager
         return player;
     }
 
+    private void SetUnLockUnit()
+    {
+        UnLockUnit.Add(true);
+
+        for (int i = 1; i < Managers.Data.UnitStatDict.Count; i++)
+        {
+            if (PlayerPrefs.GetInt($"Unit_{i}") == 0)
+            {
+                UnLockUnit.Add(false);
+            }
+            else
+            {
+                UnLockUnit.Add(true);
+            }
+        }
+    }
+
+    public void SwitchUnLockUnit(int number)
+    {
+        UnLockUnit[number] = true;
+    }
+
     private void SetUnitLevel()
     {
         for (int i = 0; i < Managers.Data.UnitStatDict.Count; i++)
@@ -49,6 +74,13 @@ public class GameManager
     public int GetUnitLevel(string name)
     {
         return unitLevels[name];
+    }
+
+    public void UpgradeUnitLevel(string name)
+    {
+        int level = unitLevels[name];
+        level++;
+        unitLevels[name] = level;
     }
 
     public void NextStage()

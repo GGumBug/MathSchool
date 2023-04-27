@@ -58,12 +58,12 @@ public class UI_Play : UI_Popup
 
     private void StartAnimation()
     {
-        stagePanel.transform.DOLocalMoveX(720f, 2f);
+        stagePanel.transform.DOLocalMoveX(720f, 1f);
     }
 
     public void GoToMain()
     {
-        float duration = 2f;
+        float duration = 1f;
         stagePanel.transform.DOLocalMoveX(1920f, duration);
         StartCoroutine(IEClosePopupUI(duration));
     }

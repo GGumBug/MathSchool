@@ -10,25 +10,11 @@ public class UnitStat : Stat
     [field: SerializeField]
     public int Price { get; protected set; }
 
-    public void LevelUp()
-    {
-        int level = Level;
-
-        Data.Unit unitStat;
-        if (!unitDatas.TryGetValue(level + 1, out unitStat))
-        {
-            Debug.Log("레벨이 한계치 입니다!");
-            return;
-        }
-
-        Level += 1;
-        SetStat();
-    }
-
-    protected void SetStat()
+    protected void SetStat(string name)
     {
         unitsDatas = Managers.Data.UnitStatDict;
-        unitDatas = unitsDatas[Name];
+        unitDatas = unitsDatas[name];
+        Level = Managers.Game.GetUnitLevel(name);
         Data.Unit unitStat = unitDatas[Level];
 
         Hp = unitStat.hp;

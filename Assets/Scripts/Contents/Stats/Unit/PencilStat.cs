@@ -7,8 +7,7 @@ public class PencilStat : UnitStat
     private void Start()
     {
         Name = "Pencil";
-        Level = 1;
 
-        SetStat();
+        SetStat(Name);
     }
 }

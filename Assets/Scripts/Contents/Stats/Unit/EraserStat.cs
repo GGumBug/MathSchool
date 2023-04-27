@@ -7,8 +7,7 @@ public class EraserStat : UnitStat
     private void Start()
     {
         Name = "Eraser";
-        Level = 1;
 
-        SetStat();
+        SetStat(Name);
     }
 }

@@ -24,6 +24,8 @@ namespace Data
         public int atk;
         public float atkDelay;
         public int price;
+        public int unlockPrice;
+        public int levelUpPrice;
     }
 
     [Serializable]
