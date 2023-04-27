@@ -9,6 +9,8 @@ TagManager:
   - Unit
   - ' AttackRange'
   - EnemyDestination
+  - Slot
+  - Number
   layers:
   - Default
   - TransparentFX
@@ -49,11 +51,17 @@ TagManager:
   - name: Tile
     uniqueID: 4010778559
     locked: 0
+  - name: Slot
+    uniqueID: 3326388459
+    locked: 0
   - name: Unit
     uniqueID: 2823600283
     locked: 0
   - name: Enemy
     uniqueID: 3272151225
+    locked: 0
+  - name: Number
+    uniqueID: 2270306449
     locked: 0
   - name: Bullet
     uniqueID: 1423515269
