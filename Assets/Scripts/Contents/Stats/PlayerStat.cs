@@ -13,7 +13,7 @@ public class PlayerStat : Stat
     {
         MaxHp = 3;
         MathEnergy = 0;
-        Gear = 1000;
+        Gear = 200;
     }
 
     public void SetMathEnergy(int value)

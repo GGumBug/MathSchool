@@ -114,21 +114,27 @@ public class UI_UpgradeButton : UI_Base
         }
         else if (unitLevel >= unitDict.Count - 1)
         {
-            player.playerStat.MinusGear(unitDict[unitLevel].levelUpPrice);
-            setGearAction();
-            Managers.Game.UpgradeUnitLevel(name);
-            image_UpgradeGear.gameObject.SetActive(false);
-            button_Upgrade.gameObject.SetActive(false);
-            text_Level.gameObject.SetActive(false);
-            SetTextLock(true, "Max");
+            if (player.playerStat.Gear >= unitDict[unitLevel].levelUpPrice)
+            {
+                player.playerStat.MinusGear(unitDict[unitLevel].levelUpPrice);
+                setGearAction();
+                Managers.Game.UpgradeUnitLevel(name);
+                image_UpgradeGear.gameObject.SetActive(false);
+                button_Upgrade.gameObject.SetActive(false);
+                text_Level.gameObject.SetActive(false);
+                SetTextLock(true, "Max");
+            }
         }
         else
         {
-            player.playerStat.MinusGear(unitDict[unitLevel].levelUpPrice);
-            setGearAction();
-            Managers.Game.UpgradeUnitLevel(name);
-            SetTextLevel($"{(unitLevel + 1).ToString()} -> {(unitLevel + 2).ToString()}");
-            SetTextUpgradePrice(unitDict[unitLevel+1].levelUpPrice);
+            if (player.playerStat.Gear >= unitDict[unitLevel].levelUpPrice)
+            {
+                player.playerStat.MinusGear(unitDict[unitLevel].levelUpPrice);
+                setGearAction();
+                Managers.Game.UpgradeUnitLevel(name);
+                SetTextLevel($"{(unitLevel + 1).ToString()} -> {(unitLevel + 2).ToString()}");
+                SetTextUpgradePrice(unitDict[unitLevel + 1].levelUpPrice);
+            }
         }
     }
 }
