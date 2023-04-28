@@ -103,31 +103,32 @@ public class UnitController : BaseController
             mousePos.z = 0;
             transform.position = mousePos;
 
-            RaycastHit hit;
+            RaycastHit[] hits;
             LayerMask mask = LayerMask.GetMask("Tile");
+            hits = Physics.RaycastAll(Camera.main.ScreenPointToRay(Input.mousePosition), mask);
 
-            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, mask))
+            foreach (RaycastHit hit in hits)
             {
-                Vector3 dest = hit.collider.transform.position;
-                dest.z = 0;
-                guidUnit.transform.position = dest;
-            }
+                if (hit.collider.CompareTag("Tile"))
+                {
+                    Vector3 dest = hit.collider.transform.position;
+                    dest.z = 0;
+                    guidUnit.transform.position = dest;
 
-            if (Input.GetMouseButtonDown(0))
-            {
-                if (hit.collider == null)
-                {
-                    Debug.Log("잘못 된 배치 입니다.");
-                    CancelCollocate();
-                }
-                else
-                {
-                    if (!hit.collider.gameObject.GetComponent<Tile>().IsEmpty)
+                    if (Input.GetMouseButtonDown(0))
                     {
-                        Tile = hit.collider.GetComponent<Tile>();
-                        Tile.SetIsEmpty();
-                        Collocate(price);
-                        yield break;
+                        if (!hit.collider.gameObject.GetComponent<Tile>().IsEmpty)
+                        {
+                            Tile = hit.collider.GetComponent<Tile>();
+                            Tile.SetIsEmpty();
+                            Collocate(price);
+                            yield break;
+                        }
+                        else
+                        {
+                            Debug.Log("잘못 된 배치 입니다.");
+                            CancelCollocate();
+                        }
                     }
                 }
             }

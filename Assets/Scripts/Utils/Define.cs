@@ -33,4 +33,13 @@ public class Define : MonoBehaviour
         Clear,
         Over
     }
+
+    public enum QuizMode
+    {
+        HavingAQuiz,
+        Waiting,
+        FeverTime,
+        Matched,
+        QuizEnd
+    }
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Game : BaseScene
 {
+    private StageController stageController;
     private QuizController quizController;
     private TileSpawner tileSpawner;
     private SlotSpawner slotSpawner;
@@ -13,8 +14,10 @@ public class Game : BaseScene
     {
         base.Init();
 
+        stageController = gameObject.GetOrAddComponent<StageController>();
         quizController = gameObject.GetOrAddComponent<QuizController>();
         quizController.MakeQuiz();
+        quizController.MakeQuestion();
         tileSpawner = gameObject.GetOrAddComponent<TileSpawner>();
         tileSpawner.SpwanTile();
         slotSpawner = gameObject.GetOrAddComponent<SlotSpawner>();
@@ -29,6 +32,11 @@ public class Game : BaseScene
         player.GetComponent<PlayerStat>().SetStartStat();
         ui_Game.SetTextMathEnergy(player);
         ui_Game.CreateHeart();
+    }
+
+    private void Update()
+    {
+        quizController.UpDateSpawnNumber(stageController.GameMode);
     }
 
     public override void Clear()
