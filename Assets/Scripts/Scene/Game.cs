@@ -7,8 +7,9 @@ public class Game : BaseScene
     private StageController stageController;
     private QuizController quizController;
     private TileSpawner tileSpawner;
-    private SlotSpawner slotSpawner;
     private UI_Game ui_Game;
+
+    public SlotSpawner slotSpawner { get; private set; }
 
     protected override void Init()
     {

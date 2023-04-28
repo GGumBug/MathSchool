@@ -3,21 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public class QuizController : MonoBehaviour
+public interface QuizClear
 {
-    private int front;
-    private int rear;
-    private int answer;
-    private int emptySlot;
-    private float startPosY = 6f;
-    private float spawnDelay = 3f;
-    private float curSpawnDelay = 0;
-    private bool IsChoose;
+    void QuizFadeOut();
+}
 
-    Vector2 spawnSize = new Vector2(6.7f, 2.2f);
-    private List<int> questions = new List<int>();
-    List<Slot> _quizSlots;
-    Number curNumber;
+public class QuizController : MonoBehaviour, QuizClear
+{
+    private int         front;
+    private int         rear;
+    private int         answer;
+    private int         emptySlot;
+    private float       startPosY = 6f;
+    private float       spawnDelay = 3f;
+    private float       curSpawnDelay = 0;
+    private bool        IsChoose;
+
+    Vector2                 spawnSize = new Vector2(6.7f, 2.2f);
+    private List<int>       questions = new List<int>();
+    private List<Number>    numbers = new List<Number>();
+    private Number          curNumber;
 
     Define.QuizMode quizMode = Define.QuizMode.HavingAQuiz;
 
@@ -41,84 +46,6 @@ public class QuizController : MonoBehaviour
         }
     }
 
-    public void MakeQuiz()
-    {
-        front = Managers.Game.CurrentStageLevel + 1;
-        rear = Random.Range(1, 10);
-        answer = front * rear;
-
-        string quiz = $"{front}*{rear}={answer}";
-        quizLength = quiz.Length;
-    }
-
-    public void FillQuizSlot(List<Slot> quizSlots)
-    {
-        _quizSlots = quizSlots;
-        emptySlot = Random.Range(0, 2);
-
-        for (int i = 0; i < quizSlots.Count; i++)
-        {
-            int index = i;
-
-            if (i == 0)
-            {
-                MakeNumber(quizSlots, index, front);
-            }
-            else if (index == 2)
-            {
-                if (emptySlot == 0)
-                {
-                    quizSlots[index].SetQustionMarkColor(Color.white);
-                    quizSlots[index].SetAnswerNumber(rear);
-                    AddQuestionAnswer(rear);
-                    continue;
-                }
-
-                MakeNumber(quizSlots, index, rear);
-            }
-            else if (index == 4)
-            {
-                int answerfirstDigit = int.Parse(answer.ToString()[0].ToString());
-                if (answer.ToString().Length >= 2)
-                {
-                    int answerLastDigit = int.Parse(answer.ToString()[1].ToString());
-                    if (emptySlot == 1)
-                    {
-                        quizSlots[index + 1].SetQustionMarkColor(Color.white);
-                        quizSlots[index + 1].SetAnswerNumber(answerLastDigit);
-                        AddQuestionAnswer(answerLastDigit);
-                    }
-                    else
-                    {
-                        MakeNumber(quizSlots, index + 1, answerLastDigit);
-                    }
-                }
-
-                if (emptySlot == 1)
-                {
-                    quizSlots[index].SetQustionMarkColor(Color.white);
-                    quizSlots[index].SetAnswerNumber(answerfirstDigit);
-                    AddQuestionAnswer(answerfirstDigit);
-
-                    continue;
-                }
-
-                MakeNumber(quizSlots, index, answerfirstDigit);
-            }
-        }
-    }
-
-    private void MakeNumber(List<Slot> quizSlots, int index, int value)
-    {
-        GameObject go = Managers.Resource.Instantiate("Number", quizSlots[index].transform);
-        Sprite sprite = Managers.Resource.Load<Sprite>($"Prefabs/Images/Numbers_{value}");
-        Number num = go.GetComponent<Number>();
-        num.SetNumber(value);
-        num.SetSpriteNumber(sprite);
-        quizSlots[index].SetQustionMarkColor(Color.clear);
-        quizSlots[index].SetIsEmpty();
-    }
-
     public void UpDateSpawnNumber(Define.GameMode gameMode)
     {
         switch (gameMode)
@@ -127,10 +54,11 @@ public class QuizController : MonoBehaviour
                 switch (quizMode)
                 {
                     case Define.QuizMode.HavingAQuiz:
-                        SpawnNumber();
+                        SpawnFildNumber();
                         break;
-                    case Define.QuizMode.Waiting:
-                        Debug.Log("퀴즈 대기");
+                    case Define.QuizMode.Matched:
+                        QuizFadeOut();
+                        CreateNewQuiz();
                         break;
                 }
                 break;
@@ -143,7 +71,85 @@ public class QuizController : MonoBehaviour
         }
     }
 
-    private void SpawnNumber()
+    public void MakeQuiz()
+    {
+        front = Managers.Game.CurrentStageLevel + 1;
+        rear = Random.Range(1, 10);
+        answer = front * rear;
+
+        string quiz = $"{front}*{rear}={answer}";
+        quizLength = quiz.Length;
+    }
+
+    public void FillQuizSlot(List<GameObject> quizSlots)
+    {
+        emptySlot = Random.Range(0, 2);
+
+        for (int i = 0; i < quizSlots.Count; i++)
+        {
+            int index = i;
+
+            if (i == 0)
+            {
+                SpawnQuestionNumber(quizSlots, index, front);
+            }
+            else if (index == 2)
+            {
+                if (emptySlot == 0)
+                {
+                    quizSlots[index].GetComponent<Slot>().SetQustionMarkColor(Color.white);
+                    quizSlots[index].GetComponent<Slot>().SetAnswerNumber(rear);
+                    AddQuestionAnswer(rear);
+                    continue;
+                }
+
+                SpawnQuestionNumber(quizSlots, index, rear);
+            }
+            else if (index == 4)
+            {
+                int answerfirstDigit = int.Parse(answer.ToString()[0].ToString());
+                if (answer.ToString().Length >= 2)
+                {
+                    int answerLastDigit = int.Parse(answer.ToString()[1].ToString());
+                    if (emptySlot == 1)
+                    {
+                        quizSlots[index + 1].GetComponent<Slot>().SetQustionMarkColor(Color.white);
+                        quizSlots[index + 1].GetComponent<Slot>().SetAnswerNumber(answerLastDigit);
+                        AddQuestionAnswer(answerLastDigit);
+                    }
+                    else
+                    {
+                        SpawnQuestionNumber(quizSlots, index + 1, answerLastDigit);
+                    }
+                }
+
+                if (emptySlot == 1)
+                {
+                    quizSlots[index].GetComponent<Slot>().SetQustionMarkColor(Color.white);
+                    quizSlots[index].GetComponent<Slot>().SetAnswerNumber(answerfirstDigit);
+                    AddQuestionAnswer(answerfirstDigit);
+
+                    continue;
+                }
+
+                SpawnQuestionNumber(quizSlots, index, answerfirstDigit);
+            }
+        }
+    }
+
+    private void SpawnQuestionNumber(List<GameObject> quizSlots, int index, int value)
+    {
+        GameObject go = Managers.Resource.Instantiate("Number", quizSlots[index].transform);
+        Sprite sprite = Managers.Resource.Load<Sprite>($"Prefabs/Images/Numbers_{value}");
+        Number num = go.GetComponent<Number>();
+        numbers.Add(num);
+        num.SetNumber(value);
+        num.SetSpriteNumber(sprite);
+        quizSlots[index].GetComponent<Slot>().SetQustionMarkColor(Color.clear);
+        quizSlots[index].GetComponent<Slot>().SetIsEmpty();
+    }
+
+    private void SpawnFildNumber()
     {
         curSpawnDelay += Time.deltaTime;
         if (curSpawnDelay > spawnDelay)
@@ -153,6 +159,7 @@ public class QuizController : MonoBehaviour
             Vector3 pos = new Vector3(startPosX, startPosY, 0);
             GameObject go = Managers.Resource.Instantiate("Number");
             Number num = go.GetComponent<Number>();
+            numbers.Add(num);
             go.transform.position = pos;
             SettingNumber(num, SelectQuestion());
             num.SwitchFildNumber();
@@ -230,11 +237,14 @@ public class QuizController : MonoBehaviour
 
     private bool CheckSlots()
     {
+        Game gameScene = Managers.Scene.CurrentScene as Game;
+        List<GameObject> _quizSlots = gameScene.slotSpawner.QuizSlots;
         if (_quizSlots.Count == 0)
             return false;
 
-        foreach (Slot slot in _quizSlots)
+        foreach (GameObject go in _quizSlots)
         {
+            Slot slot = go.GetComponent<Slot>();
             if (slot == null)
                 continue;
 
@@ -270,9 +280,12 @@ public class QuizController : MonoBehaviour
                         slot.SetQustionMarkColor(Color.clear);
                         curNumber.transform.position = slot.transform.position;
                         curNumber.SwitchFildNumber();
-                        CheckSlots();
                         curNumber = null;
                         IsChoose = false;
+                        if (CheckSlots())
+                        {
+                            quizMode = Define.QuizMode.Matched;
+                        }
                         yield break;
                     }
                 }
@@ -286,5 +299,30 @@ public class QuizController : MonoBehaviour
 
             yield return null;
         }
+    }
+
+    public void QuizFadeOut()
+    {
+        List<SpriteRenderer> sprites = new List<SpriteRenderer>();
+        Game gameScene = Managers.Scene.CurrentScene as Game;
+        SlotSpawner slotSpawner = gameScene.slotSpawner;
+        slotSpawner.QuizFadeOut();
+        foreach (Number item in numbers)
+        {
+            sprites.Add(item.gameObject.GetComponent<SpriteRenderer>());
+        }
+
+        foreach (SpriteRenderer item in sprites)
+        {
+            item.DOColor(Color.clear, 2f);
+        }
+        //numbers.Clear();
+        //questions.Clear();
+    }
+
+    private void CreateNewQuiz()
+    {
+        Game gameScene = Managers.Scene.CurrentScene as Game;
+        Debug.Log("새 문제 출제");
     }
 }
