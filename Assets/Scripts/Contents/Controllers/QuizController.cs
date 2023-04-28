@@ -9,17 +9,45 @@ public class QuizController : MonoBehaviour
     private int rear;
     private int answer;
     private int emptySlot;
-    private int numberDistance = 5;
     private float startPosY = 6f;
     private float spawnDelay = 3f;
     private float curSpawnDelay = 0;
+    private bool IsChoose;
 
     Vector2 spawnSize = new Vector2(6.7f, 2.2f);
     private List<int> questions = new List<int>();
+    Number curNumber;
 
     Define.QuizMode quizMode = Define.QuizMode.HavingAQuiz;
 
     public int quizLength { get; private set; }
+
+    private void Update()
+    {
+        RaycastHit[] hits;
+        LayerMask mask = LayerMask.GetMask("Number");
+        hits = Physics.RaycastAll(Camera.main.ScreenPointToRay(Input.mousePosition), mask);
+
+        foreach (RaycastHit hit in hits)
+        {
+            if (Input.GetMouseButtonDown(0) && hit.collider.CompareTag("Number") && !IsChoose)
+            {
+                curNumber = hit.collider.gameObject.GetComponent<Number>();
+                if (!curNumber.FildNumber)
+                    return;
+                StartCoroutine(SelectNumber(hit, curNumber));
+            }
+
+            if (Input.GetMouseButtonDown(0) && hit.collider.CompareTag("Slot"))
+            {
+                Slot slot = hit.collider.gameObject.GetComponent<Slot>();
+                if (curNumber != null && curNumber.number == slot.AnswerNumber)
+                {
+                    Debug.Log("정답입니다!");
+                }
+            }
+        }
+    }
 
     public void MakeQuiz()
     {
@@ -134,16 +162,18 @@ public class QuizController : MonoBehaviour
             Number num = go.GetComponent<Number>();
             go.transform.position = pos;
             SettingNumber(num, SelectQuestion());
+            num.SetFildNumber();
             if (quizMode != Define.QuizMode.HavingAQuiz)
                 return;
-            FallingNumber(go, destPosY);
+            FallingNumber(num, destPosY);
             curSpawnDelay = 0;
         }
     }
 
-    private void FallingNumber(GameObject number, float destPosY)
+    private void FallingNumber(Number number, float destPosY)
     {
-        number.transform.DOLocalMoveY(destPosY, 5f);
+        var numberTween = number.transform.DOLocalMoveY(destPosY, 5f);
+        number.SetTweener(numberTween);
     }
 
     private void SettingNumber(Number num, int value)
@@ -203,5 +233,25 @@ public class QuizController : MonoBehaviour
         int selectNumber = questions[selectQuestion];
         questions.RemoveAt(selectQuestion);
         return selectNumber;
+    }
+
+    private IEnumerator SelectNumber(RaycastHit numhit, Number num)
+    {
+        IsChoose = true;
+        num.StopTweener();
+        while (true)
+        {
+            var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            mousePos.z = 0;
+            numhit.collider.transform.position = mousePos;
+
+            if (Input.GetMouseButtonDown(1))
+            {
+                IsChoose = false;
+                yield break;
+            }
+
+            yield return null;
+        }
     }
 }
