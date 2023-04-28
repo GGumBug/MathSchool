@@ -47,8 +47,7 @@ public class SlotSpawner : MonoBehaviour
                 Vector3 position = new Vector3(px, py, 0);
 
                 go.transform.position = position;
-                go.name = $"{y},{x}";
-
+                go.name = $"Slot_{y},{x}";
                 QuizSlots.Add(go.GetComponent<Slot>());
             }
         }

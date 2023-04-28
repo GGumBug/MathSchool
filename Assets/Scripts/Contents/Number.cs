@@ -22,8 +22,13 @@ public class Number : MonoBehaviour
         this.number = number;
     }
 
-    public void SetFildNumber()
+    public void SwitchFildNumber()
     {
+        if (FildNumber)
+        {
+            FildNumber = false;
+        }
+
         FildNumber = true;
     }
 

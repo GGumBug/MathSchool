@@ -16,6 +16,7 @@ public class QuizController : MonoBehaviour
 
     Vector2 spawnSize = new Vector2(6.7f, 2.2f);
     private List<int> questions = new List<int>();
+    List<Slot> _quizSlots;
     Number curNumber;
 
     Define.QuizMode quizMode = Define.QuizMode.HavingAQuiz;
@@ -37,15 +38,6 @@ public class QuizController : MonoBehaviour
                     return;
                 StartCoroutine(SelectNumber(hit, curNumber));
             }
-
-            if (Input.GetMouseButtonDown(0) && hit.collider.CompareTag("Slot"))
-            {
-                Slot slot = hit.collider.gameObject.GetComponent<Slot>();
-                if (curNumber != null && curNumber.number == slot.AnswerNumber)
-                {
-                    Debug.Log("정답입니다!");
-                }
-            }
         }
     }
 
@@ -61,6 +53,7 @@ public class QuizController : MonoBehaviour
 
     public void FillQuizSlot(List<Slot> quizSlots)
     {
+        _quizSlots = quizSlots;
         emptySlot = Random.Range(0, 2);
 
         for (int i = 0; i < quizSlots.Count; i++)
@@ -162,7 +155,7 @@ public class QuizController : MonoBehaviour
             Number num = go.GetComponent<Number>();
             go.transform.position = pos;
             SettingNumber(num, SelectQuestion());
-            num.SetFildNumber();
+            num.SwitchFildNumber();
             if (quizMode != Define.QuizMode.HavingAQuiz)
                 return;
             FallingNumber(num, destPosY);
@@ -235,6 +228,23 @@ public class QuizController : MonoBehaviour
         return selectNumber;
     }
 
+    private bool CheckSlots()
+    {
+        if (_quizSlots.Count == 0)
+            return false;
+
+        foreach (Slot slot in _quizSlots)
+        {
+            if (slot == null)
+                continue;
+
+            if (!slot.IsEmpty)
+                return false;
+        }
+
+        return true;
+    }
+
     private IEnumerator SelectNumber(RaycastHit numhit, Number num)
     {
         IsChoose = true;
@@ -244,6 +254,29 @@ public class QuizController : MonoBehaviour
             var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mousePos.z = 0;
             numhit.collider.transform.position = mousePos;
+
+            RaycastHit[] hits;
+            LayerMask mask = LayerMask.GetMask("Number");
+            hits = Physics.RaycastAll(Camera.main.ScreenPointToRay(Input.mousePosition), mask);
+
+            foreach (RaycastHit hit in hits)
+            {
+                if (Input.GetMouseButtonDown(0) && hit.collider.CompareTag("Slot"))
+                {
+                    Slot slot = hit.collider.gameObject.GetComponent<Slot>();
+                    if (curNumber != null && curNumber.number == slot.AnswerNumber)
+                    {
+                        slot.SetIsEmpty();
+                        slot.SetQustionMarkColor(Color.clear);
+                        curNumber.transform.position = slot.transform.position;
+                        curNumber.SwitchFildNumber();
+                        CheckSlots();
+                        curNumber = null;
+                        IsChoose = false;
+                        yield break;
+                    }
+                }
+            }
 
             if (Input.GetMouseButtonDown(1))
             {
