@@ -35,7 +35,10 @@ public class Slot : MonoBehaviour
         IsEmpty = false;
         AnswerNumber = 0;
         qustionMark.color = Color.white;
-        SpriteRenderer slotSprite = GetComponent<SpriteRenderer>();
-        slotSprite.color = Color.white;
+        SpriteRenderer[] slotSprite = GetComponentsInChildren<SpriteRenderer>();
+        foreach (SpriteRenderer sprite in slotSprite)
+        {
+            sprite.color = Color.white;
+        }
     }
 }

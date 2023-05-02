@@ -6,7 +6,7 @@ public class EraserController : UnitController
 {
     protected override void UpdateSkill()
     {
-        if (IsCollocating == true)
+        if (Managers.Game.IsUnitCollocating)
             return;
     }
 }

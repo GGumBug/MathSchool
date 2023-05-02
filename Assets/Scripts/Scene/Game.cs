@@ -5,11 +5,11 @@ using UnityEngine;
 public class Game : BaseScene
 {
     private StageController stageController;
-    private QuizController quizController;
-    private TileSpawner tileSpawner;
-    private UI_Game ui_Game;
+    private TileSpawner     tileSpawner;
+    private UI_Game         ui_Game;
 
     public SlotSpawner slotSpawner { get; private set; }
+    public QuizController quizController { get; private set; }
 
     protected override void Init()
     {
@@ -17,11 +17,11 @@ public class Game : BaseScene
 
         stageController = gameObject.GetOrAddComponent<StageController>();
         quizController = gameObject.GetOrAddComponent<QuizController>();
+        tileSpawner = gameObject.GetOrAddComponent<TileSpawner>();
+        slotSpawner = gameObject.GetOrAddComponent<SlotSpawner>();
         quizController.MakeQuiz();
         quizController.MakeQuestion();
-        tileSpawner = gameObject.GetOrAddComponent<TileSpawner>();
         tileSpawner.SpwanTile();
-        slotSpawner = gameObject.GetOrAddComponent<SlotSpawner>();
         slotSpawner.SetSlotCount(quizController.quizLength);
         slotSpawner.SpwanSlot();
         quizController.FillQuizSlot(slotSpawner.QuizSlots);

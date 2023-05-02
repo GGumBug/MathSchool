@@ -6,7 +6,7 @@ public class PencilController : UnitController
 {
     protected override void UpdateSkill()
     {
-        if (IsCollocating == true)
+        if (Managers.Game.IsUnitCollocating)
             return;
 
         _attackDelay += Time.deltaTime;

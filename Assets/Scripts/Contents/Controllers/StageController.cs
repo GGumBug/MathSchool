@@ -17,9 +17,9 @@ public class StageController : MonoBehaviour
     private float   curfeverSpawnDelay;
     private bool    isGameEnd;
 
-    public Define.GameMode GameMode { get; private set; } = Define.GameMode.Nomal;
+    public Define.GameMode  GameMode { get; private set; } = Define.GameMode.Nomal;
 
-    public int      StageLevel { get; private set; } = 5;
+    public int              StageLevel { get; private set; } = 1;
 
     private void Start()
     {
@@ -35,6 +35,8 @@ public class StageController : MonoBehaviour
                 if (spawnCount >= maxEnemyCount)
                 {
                     GameMode = Define.GameMode.Fever;
+                    Game gameScene = Managers.Scene.CurrentScene as Game;
+                    gameScene.quizController.SwitchFeverTime();
                     GameMessage("FEVER TIME");
                     float totalEnemyCount = maxEnemyCount + feverEnemyCount;
                     UI_Game uI_Game = Managers.UI.uI_Scene as UI_Game;

@@ -7,10 +7,10 @@ public class GameManager
     private PlayerController player = null;
     private Dictionary<string, int> unitLevels = new Dictionary<string, int>();
 
-    public int UnLockStage { get; private set; } = 1;
-    public int CurrentStageLevel { get; private set; } = 1;
-    public List<bool> UnLockUnit { get; private set; } = new List<bool>();
-
+    public int          UnLockStage { get; private set; } = 1;
+    public int          CurrentStageLevel { get; private set; } = 1;
+    public List<bool>   UnLockUnit { get; private set; } = new List<bool>();
+    public bool         IsUnitCollocating { get; protected set; } = false;
 
     public void Init()
     {
@@ -91,5 +91,16 @@ public class GameManager
     public void SetCurrentStageLevel(int index)
     {
         CurrentStageLevel = index;
+    }
+
+    public void SwitchUnitCollocating()
+    {
+        if (IsUnitCollocating == true)
+        {
+            IsUnitCollocating = false;
+            return;
+        }
+
+        IsUnitCollocating = true;
     }
 }

@@ -47,5 +47,7 @@ public class Number : MonoBehaviour
         SpriteRenderer sprite = GetComponent<SpriteRenderer>();
         sprite.color = Color.white;
         FildNumber = false;
+        if (tween != null)
+            tween.Kill();
     }
 }

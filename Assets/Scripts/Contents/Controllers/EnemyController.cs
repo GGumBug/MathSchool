@@ -64,6 +64,9 @@ public class EnemyController : BaseController
                 return;
             LockTarget = null;
             _skillDelay = 0;
+            Animator anim = GetComponentInChildren<Animator>();
+            if (gameObject.activeSelf)
+                anim.SetTrigger("IsMove");
             State = Define.State.Move;
         }
     }

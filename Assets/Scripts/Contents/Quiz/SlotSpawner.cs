@@ -33,14 +33,17 @@ public class SlotSpawner : MonoBehaviour, QuizClear
                 if (x == 1)
                 {
                     go = Managers.Resource.Instantiate("MultiplySlot", transform);
+                    go.name = "MultiplySlot";
                 }
                 else if (x == 3)
                 {
                     go = Managers.Resource.Instantiate("EqualSignSlot", transform);
+                    go.name = "EqualSignSlot";
                 }
                 else
                 {
                     go = Managers.Resource.Instantiate("Slot", transform);
+                    go.name = "Slot";
                 }
                 
                 float px = ((-slotCount.x * 0.5f - offset.x) + x * xSize) + x * interval;
@@ -48,25 +51,26 @@ public class SlotSpawner : MonoBehaviour, QuizClear
                 Vector3 position = new Vector3(px, py, 0);
 
                 go.transform.position = position;
-                go.name = $"Slot_{y},{x}";
                 QuizSlots.Add(go);
             }
         }
     }
 
-    public void QuizFadeOut()
+    public void QuizFadeOut(float delay)
     {
-        List<SpriteRenderer> sprites = new List<SpriteRenderer>();
-        float delay = 2f;
+        List<SpriteRenderer[]> sprites = new List<SpriteRenderer[]>();
 
         foreach (GameObject item in QuizSlots)
         {
-            sprites.Add(item.GetComponent<SpriteRenderer>());
+            sprites.Add(item.GetComponentsInChildren<SpriteRenderer>());
         }
 
-        foreach (SpriteRenderer item in sprites)
+        foreach (SpriteRenderer[] item in sprites)
         {
-            item.DOColor(Color.clear, delay);
+            for (int i = 0; i < item.Length; i++)
+            {
+                item[i].DOColor(Color.clear, delay);
+            }
         }
 
         StartCoroutine(WaitFadeOut(delay));
@@ -81,6 +85,8 @@ public class SlotSpawner : MonoBehaviour, QuizClear
             Slot slot = item.GetComponent<Slot>();
             if (slot != null)
                 slot.ResetSlot();
+            else
+                item.GetComponent<SpriteRenderer>().color = Color.black;
 
             Managers.Resource.Destroy(item);
         }

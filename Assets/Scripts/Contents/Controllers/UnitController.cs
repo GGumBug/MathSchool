@@ -30,15 +30,16 @@ public class UnitController : BaseController
 
     public void BeforeCollocate(string path, int price)
     {
-        SwitchIsCollocating();
+        SwitchIsCollocate();
+        Managers.Game.SwitchUnitCollocating();
         StartCoroutine(IEBeforeCollocate(path, price));
     }
 
     private void SetGuidUnit(string path)
     {
         guidUnit = Managers.Resource.Instantiate(path);
+        guidUnit.GetComponent<UnitController>().SwitchIsCollocate();
         SpriteRenderer[] sprites= guidUnit.GetComponentsInChildren<SpriteRenderer>();
-        guidUnit.GetComponent<UnitController>().SwitchIsCollocating();
         Color color = Color.white;
         color.a = 0.5f;
         for (int i = 0; i < sprites.Length; i++)
@@ -47,7 +48,20 @@ public class UnitController : BaseController
         }
     }
 
-    public void SwitchIsCollocating()
+    private void Collocate(int price)
+    {
+        transform.position = guidUnit.transform.position;
+        guidUnit.GetComponentInChildren<SpriteRenderer>().color = originColor;
+        Managers.Resource.Destroy(guidUnit);
+        PlayerController player = Managers.Game.GetPlayer();
+        player.GetComponent<PlayerStat>().UseMathEnergy(price);
+        UI_Game uI_Game = Managers.UI.uI_Scene as UI_Game;
+        uI_Game.SetTextMathEnergy(player);
+        SwitchIsCollocate();
+        Managers.Game.SwitchUnitCollocating();
+    }
+
+    public void SwitchIsCollocate()
     {
         if (IsCollocating == true)
         {
@@ -58,20 +72,9 @@ public class UnitController : BaseController
         IsCollocating = true;
     }
 
-    private void Collocate(int price)
-    {
-        SwitchIsCollocating();
-        transform.position = guidUnit.transform.position;
-        guidUnit.GetComponentInChildren<SpriteRenderer>().color = originColor;
-        Managers.Resource.Destroy(guidUnit);
-        PlayerController player = Managers.Game.GetPlayer();
-        player.GetComponent<PlayerStat>().UseMathEnergy(price);
-        UI_Game uI_Game = Managers.UI.uI_Scene as UI_Game;
-        uI_Game.SetTextMathEnergy(player);
-    }
-
     private void CancelCollocate()
     {
+        Managers.Game.SwitchUnitCollocating();
         Managers.Resource.Destroy(gameObject);
         guidUnit.GetComponentInChildren<SpriteRenderer>().color = originColor;
         Managers.Resource.Destroy(guidUnit);

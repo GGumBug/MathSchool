@@ -58,6 +58,9 @@ public class UI_Game : UI_Scene
     {
         for (int i = 0; i < Managers.Data.UnitStatDict.Count; i++)
         {
+            if (!Managers.Game.UnLockUnit[i])
+                continue;
+
             GameObject go = Managers.Resource.Instantiate("UI/Scene/BTN_SpawnUnit", unitPanel.transform);
             UI_BTNSpawnUnit uI_BTNSpawnUnit = go.GetComponent<UI_BTNSpawnUnit>();
             Button spwanButton = go.GetComponent<Button>();
