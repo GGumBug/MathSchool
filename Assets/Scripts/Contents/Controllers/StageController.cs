@@ -63,17 +63,21 @@ public class StageController : MonoBehaviour
                 if (fieldEnemyCount <= 0 && !isGameEnd)
                 {
                     isGameEnd = true;
-                    GameMessage("GAME CLEAR");
-                    Managers.Game.NextStage();
-                    StartCoroutine("IEGoToMainScene");
+                    Managers.Game.NextStage(StageLevel);
+                    UI_GameEnd uI_GameEnd = Managers.UI.ShowPopupUI<UI_GameEnd>();
+                    Game gameScene = Managers.Scene.CurrentScene as Game;
+                    uI_GameEnd.ChangeGameEndTitle(GameMode);
+                    uI_GameEnd.SetGearCount(gameScene.quizController.AcquiredGear);
                 }
                 break;
             case Define.GameMode.Over:
                 if (!isGameEnd)
                 {
                     isGameEnd = true;
-                    GameMessage("GAME OVER");
-                    StartCoroutine("IEGoToMainScene");
+                    UI_GameEnd uI_GameEnd = Managers.UI.ShowPopupUI<UI_GameEnd>();
+                    Game gameScene = Managers.Scene.CurrentScene as Game;
+                    uI_GameEnd.ChangeGameEndTitle(GameMode);
+                    uI_GameEnd.SetGearCount(gameScene.quizController.AcquiredGear);
                 }
                 break;
         }
@@ -156,12 +160,5 @@ public class StageController : MonoBehaviour
         UI_GameMessage uI_GameMessage = Managers.UI.ShowPopupUI<UI_GameMessage>();
         uI_GameMessage.SetGameMessage(message);
         uI_GameMessage.StartTextAnimation();
-    }
-
-    private IEnumerator IEGoToMainScene()
-    {
-        yield return new WaitForSeconds(3f);
-
-        Managers.Scene.LoadScene(Define.Scene.Main);
     }
 }

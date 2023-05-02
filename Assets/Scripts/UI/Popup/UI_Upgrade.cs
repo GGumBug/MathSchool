@@ -71,6 +71,12 @@ public class UI_Upgrade : UI_Popup
                 continue;
             }
 
+            if (level >= unitDict.Count - 1)
+            {
+                upgradeButton.AppearMaxLevel();
+                continue;
+            }
+
             upgradeButton.SetTextLock(false);
             upgradeButton.SetTextLevel($"{level.ToString()} -> {(level+1).ToString()}");
             int levelUpPrice = unitDict[level].levelUpPrice;

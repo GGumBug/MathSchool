@@ -119,10 +119,7 @@ public class UI_UpgradeButton : UI_Base
                 player.playerStat.MinusGear(unitDict[unitLevel].levelUpPrice);
                 setGearAction();
                 Managers.Game.UpgradeUnitLevel(name);
-                image_UpgradeGear.gameObject.SetActive(false);
-                button_Upgrade.gameObject.SetActive(false);
-                text_Level.gameObject.SetActive(false);
-                SetTextLock(true, "Max");
+                AppearMaxLevel();
             }
         }
         else
@@ -136,5 +133,13 @@ public class UI_UpgradeButton : UI_Base
                 SetTextUpgradePrice(unitDict[unitLevel + 1].levelUpPrice);
             }
         }
+    }
+
+    public void AppearMaxLevel()
+    {
+        image_UpgradeGear.gameObject.SetActive(false);
+        button_Upgrade.gameObject.SetActive(false);
+        text_Level.gameObject.SetActive(false);
+        SetTextLock(true, "Max");
     }
 }

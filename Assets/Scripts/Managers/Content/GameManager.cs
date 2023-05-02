@@ -15,8 +15,7 @@ public class GameManager
     public void Init()
     {
         CreatePlayer();
-        SetUnLockUnit();
-        SetUnitLevel();
+        LoadSaveData();
     }
 
     public void CreatePlayer()
@@ -37,7 +36,14 @@ public class GameManager
         return player;
     }
 
-    private void SetUnLockUnit()
+    private void LoadSaveData()
+    {
+        LoadUnLockUnit();
+        LoadUnitLevel();
+        UnLockStageLevel();
+    }
+
+    private void LoadUnLockUnit()
     {
         UnLockUnit.Add(true);
 
@@ -54,12 +60,7 @@ public class GameManager
         }
     }
 
-    public void SwitchUnLockUnit(int number)
-    {
-        UnLockUnit[number] = true;
-    }
-
-    private void SetUnitLevel()
+    private void LoadUnitLevel()
     {
         for (int i = 0; i < Managers.Data.UnitStatDict.Count; i++)
         {
@@ -71,6 +72,19 @@ public class GameManager
         }
     }
 
+    private void UnLockStageLevel()
+    {
+        UnLockStage = PlayerPrefs.GetInt("UnLockStage");
+        if (UnLockStage == 0)
+            UnLockStage = 1;
+    }
+
+    public void SwitchUnLockUnit(int number)
+    {
+        PlayerPrefs.SetInt($"Unit_{number}", 1);
+        UnLockUnit[number] = true;
+    }
+
     public int GetUnitLevel(string name)
     {
         return unitLevels[name];
@@ -80,12 +94,16 @@ public class GameManager
     {
         int level = unitLevels[name];
         level++;
+        PlayerPrefs.SetInt(name, level);
         unitLevels[name] = level;
     }
 
-    public void NextStage()
+    public void NextStage(int stageLevel)
     {
-        UnLockStage++;
+        if (stageLevel == UnLockStage)
+            UnLockStage++;
+
+        PlayerPrefs.SetInt("UnLockStage", UnLockStage);
     }
 
     public void SetCurrentStageLevel(int index)

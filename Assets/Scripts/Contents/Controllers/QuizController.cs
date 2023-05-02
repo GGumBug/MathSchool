@@ -30,6 +30,7 @@ public class QuizController : MonoBehaviour, QuizClear
     Define.QuizMode quizMode = Define.QuizMode.HavingAQuiz;
 
     public int quizLength { get; private set; }
+    public int AcquiredGear { get; private set; }
 
     private void Update()
     {
@@ -64,6 +65,9 @@ public class QuizController : MonoBehaviour, QuizClear
                         break;
                     case Define.QuizMode.Matched:
                         quizMode = Define.QuizMode.Waiting;
+                        PlayerStat player = Managers.Game.GetPlayer().playerStat;
+                        player.PlusGear(1);
+                        AcquiredGear++;
                         PlusMathEnergy();
                         QuizFadeOut(fadeDelay);
                         StartCoroutine(WaitFadeOut(fadeDelay));
@@ -80,6 +84,7 @@ public class QuizController : MonoBehaviour, QuizClear
                         quizMode = Define.QuizMode.Waiting;
                         PlusMathEnergy();
                         QuizFadeOut(fadeDelay);
+                        StartCoroutine(WaitFadeOut(fadeDelay));
                         break;
                 }
                 break;
@@ -355,7 +360,7 @@ public class QuizController : MonoBehaviour, QuizClear
                         slot.SetIsEmpty();
                         slot.SetQustionMarkColor(Color.clear);
                         curNumber.transform.position = slot.transform.position;
-                        curNumber.SwitchFildNumber();
+                        curNumber.SwitchFildNumber();                        
                         curNumber = null;
                         isChoose = false;
                         if (CheckSlots())

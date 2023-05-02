@@ -13,7 +13,7 @@ public class PlayerStat : Stat
     {
         MaxHp = 3;
         MathEnergy = 0;
-        Gear = 200;
+        Gear = PlayerPrefs.GetInt("Gear");
     }
 
     public void SetMathEnergy(int value)
@@ -40,11 +40,13 @@ public class PlayerStat : Stat
     public void PlusGear(int value)
     {
         Gear += value;
+        PlayerPrefs.SetInt("Gear", Gear);
     }
 
     public void MinusGear(int value)
     {
         Gear -= value;
+        PlayerPrefs.SetInt("Gear", Gear);
     }
 
     public void MinusHP()
