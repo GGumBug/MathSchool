@@ -6,6 +6,7 @@ using DG.Tweening;
 public interface QuizClear
 {
     void QuizFadeOut();
+    IEnumerator WaitFadeOut(float delay);
 }
 
 public class QuizController : MonoBehaviour, QuizClear
@@ -17,7 +18,8 @@ public class QuizController : MonoBehaviour, QuizClear
     private float       startPosY = 6f;
     private float       spawnDelay = 3f;
     private float       curSpawnDelay = 0;
-    private bool        IsChoose;
+    private bool        isChoose;
+    private bool        isFading;
 
     Vector2                 spawnSize = new Vector2(6.7f, 2.2f);
     private List<int>       questions = new List<int>();
@@ -36,7 +38,7 @@ public class QuizController : MonoBehaviour, QuizClear
 
         foreach (RaycastHit hit in hits)
         {
-            if (Input.GetMouseButtonDown(0) && hit.collider.CompareTag("Number") && !IsChoose)
+            if (Input.GetMouseButtonDown(0) && hit.collider.CompareTag("Number") && !isChoose)
             {
                 curNumber = hit.collider.gameObject.GetComponent<Number>();
                 if (!curNumber.FildNumber)
@@ -57,8 +59,12 @@ public class QuizController : MonoBehaviour, QuizClear
                         SpawnFildNumber();
                         break;
                     case Define.QuizMode.Matched:
-                        QuizFadeOut();
-                        CreateNewQuiz();
+                        if (!isFading)
+                        {
+                            isFading = true;
+                            PlusMathEnergy();
+                            QuizFadeOut();
+                        }
                         break;
                 }
                 break;
@@ -140,6 +146,7 @@ public class QuizController : MonoBehaviour, QuizClear
     private void SpawnQuestionNumber(List<GameObject> quizSlots, int index, int value)
     {
         GameObject go = Managers.Resource.Instantiate("Number", quizSlots[index].transform);
+        go.transform.localPosition = Vector3.zero;
         Sprite sprite = Managers.Resource.Load<Sprite>($"Prefabs/Images/Numbers_{value}");
         Number num = go.GetComponent<Number>();
         numbers.Add(num);
@@ -257,7 +264,7 @@ public class QuizController : MonoBehaviour, QuizClear
 
     private IEnumerator SelectNumber(RaycastHit numhit, Number num)
     {
-        IsChoose = true;
+        isChoose = true;
         num.StopTweener();
         while (true)
         {
@@ -281,7 +288,7 @@ public class QuizController : MonoBehaviour, QuizClear
                         curNumber.transform.position = slot.transform.position;
                         curNumber.SwitchFildNumber();
                         curNumber = null;
-                        IsChoose = false;
+                        isChoose = false;
                         if (CheckSlots())
                         {
                             quizMode = Define.QuizMode.Matched;
@@ -293,12 +300,21 @@ public class QuizController : MonoBehaviour, QuizClear
 
             if (Input.GetMouseButtonDown(1))
             {
-                IsChoose = false;
+                isChoose = false;
                 yield break;
             }
 
             yield return null;
         }
+    }
+
+    private void PlusMathEnergy()
+    {
+        PlayerStat playerStat = Managers.Game.GetPlayer().playerStat;
+        // 콤보 시스템 추가 되면 콤보에따라 value 증가 되도록
+        playerStat.PlusMathEnerge(5);
+        UI_Game ui_Game = Managers.UI.uI_Scene as UI_Game;
+        ui_Game.SetTextMathEnergy(Managers.Game.GetPlayer());
     }
 
     public void QuizFadeOut()
@@ -307,22 +323,39 @@ public class QuizController : MonoBehaviour, QuizClear
         Game gameScene = Managers.Scene.CurrentScene as Game;
         SlotSpawner slotSpawner = gameScene.slotSpawner;
         slotSpawner.QuizFadeOut();
+        float delay = 2f;
+
         foreach (Number item in numbers)
         {
             sprites.Add(item.gameObject.GetComponent<SpriteRenderer>());
+            item.ResetNumber();
         }
 
         foreach (SpriteRenderer item in sprites)
         {
-            item.DOColor(Color.clear, 2f);
+            item.DOColor(Color.clear, delay);
         }
-        //numbers.Clear();
-        //questions.Clear();
+
+        StartCoroutine(WaitFadeOut(delay));
     }
 
     private void CreateNewQuiz()
     {
         Game gameScene = Managers.Scene.CurrentScene as Game;
         Debug.Log("새 문제 출제");
+        // QuizMode 변경
+    }
+
+    public IEnumerator WaitFadeOut(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        foreach (Number item in numbers)
+        {
+            Managers.Resource.Destroy(item.gameObject);
+        }
+        numbers.Clear();
+        questions.Clear();
+        CreateNewQuiz();
     }
 }

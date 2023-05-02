@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3547614232884292815}
   - component: {fileID: 3547614232884292801}
   - component: {fileID: 3518048295748295518}
+  - component: {fileID: -692096095517463436}
   m_Layer: 0
   m_Name: Slot
   m_TagString: Slot
@@ -112,6 +113,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.15, y: 1.12, z: 0.2}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-692096095517463436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3547614232884292812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edc4a165c2dc8ec4bbbd9b1bfd0ba895, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isUsing: 0
 --- !u!1 &5012050338946214130
 GameObject:
   m_ObjectHideFlags: 0

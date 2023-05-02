@@ -29,4 +29,13 @@ public class Slot : MonoBehaviour
     {
         AnswerNumber = value;
     }
+
+    public void ResetSlot()
+    {
+        IsEmpty = false;
+        AnswerNumber = 0;
+        qustionMark.color = Color.white;
+        SpriteRenderer slotSprite = GetComponent<SpriteRenderer>();
+        slotSprite.color = Color.white;
+    }
 }

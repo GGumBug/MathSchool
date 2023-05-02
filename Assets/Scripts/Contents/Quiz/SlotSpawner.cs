@@ -57,6 +57,7 @@ public class SlotSpawner : MonoBehaviour, QuizClear
     public void QuizFadeOut()
     {
         List<SpriteRenderer> sprites = new List<SpriteRenderer>();
+        float delay = 2f;
 
         foreach (GameObject item in QuizSlots)
         {
@@ -65,7 +66,24 @@ public class SlotSpawner : MonoBehaviour, QuizClear
 
         foreach (SpriteRenderer item in sprites)
         {
-            item.DOColor(Color.clear, 2f);
+            item.DOColor(Color.clear, delay);
         }
+
+        StartCoroutine(WaitFadeOut(delay));
+    }
+
+    public IEnumerator WaitFadeOut(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        foreach (GameObject item  in QuizSlots)
+        {
+            Slot slot = item.GetComponent<Slot>();
+            if (slot != null)
+                slot.ResetSlot();
+
+            Managers.Resource.Destroy(item);
+        }
+        QuizSlots.Clear();
     }
 }

@@ -41,4 +41,11 @@ public class Number : MonoBehaviour
     {
         tween.Kill();
     }
+
+    public void ResetNumber()
+    {
+        SpriteRenderer sprite = GetComponent<SpriteRenderer>();
+        sprite.color = Color.white;
+        FildNumber = false;
+    }
 }
