@@ -12,6 +12,7 @@ TagManager:
   - Slot
   - Number
   - Tile
+  - MainMathEnergy
   layers:
   - Default
   - TransparentFX
