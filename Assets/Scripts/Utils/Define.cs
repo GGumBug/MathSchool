@@ -40,6 +40,7 @@ public class Define : MonoBehaviour
         Waiting,
         FeverTime,
         Matched,
+        WrongAnswer,
         QuizEnd
     }
 }

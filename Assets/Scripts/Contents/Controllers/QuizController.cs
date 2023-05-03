@@ -11,21 +11,21 @@ public interface QuizClear
 
 public class QuizController : MonoBehaviour, QuizClear
 {
-    private int         front;
-    private int         rear;
-    private int         answer;
-    private int         emptySlot;
-    private float       startPosY = 6f;
-    private float       spawnDelay = 3f;
-    private float       curSpawnDelay = 0;
-    private float       fadeDelay = 2f;
-    private bool        isChoose;
-    private bool        isQuizEnd;
+    private int front;
+    private int rear;
+    private int answer;
+    private int emptySlot;
+    private float startPosY = 6f;
+    private float spawnDelay = 3f;
+    private float curSpawnDelay = 0;
+    private float fadeDelay = 2f;
+    private bool isChoose;
+    private bool isQuizEnd;
 
-    Vector2                 spawnSize = new Vector2(6.7f, 2.2f);
-    private List<int>       questions = new List<int>();
-    private List<Number>    numbers = new List<Number>();
-    private Number          curNumber;
+    Vector2 spawnSize = new Vector2(6.7f, 2.2f);
+    private List<int> questions = new List<int>();
+    private List<Number> numbers = new List<Number>();
+    private Number curNumber;
 
     Define.QuizMode quizMode = Define.QuizMode.HavingAQuiz;
 
@@ -36,7 +36,7 @@ public class QuizController : MonoBehaviour, QuizClear
     {
         if (Managers.Game.IsUnitCollocating)
             return;
-        
+
         RaycastHit[] hits;
         LayerMask mask = LayerMask.GetMask("Number");
         hits = Physics.RaycastAll(Camera.main.ScreenPointToRay(Input.mousePosition), mask);
@@ -58,34 +58,10 @@ public class QuizController : MonoBehaviour, QuizClear
         switch (gameMode)
         {
             case Define.GameMode.Nomal:
-                switch (quizMode)
-                {
-                    case Define.QuizMode.HavingAQuiz:
-                        SpawnFildNumber();
-                        break;
-                    case Define.QuizMode.Matched:
-                        quizMode = Define.QuizMode.Waiting;
-                        PlayerStat player = Managers.Game.GetPlayer().playerStat;
-                        AcquiredGear++;
-                        PlusMathEnergy();
-                        QuizFadeOut(fadeDelay);
-                        StartCoroutine(WaitFadeOut(fadeDelay));
-                        break;
-                }
+                QuizSystem();
                 break;
             case Define.GameMode.Fever:
-                switch (quizMode)
-                {
-                    case Define.QuizMode.HavingAQuiz:
-                        SpawnFildNumber();
-                        break;
-                    case Define.QuizMode.Matched:
-                        quizMode = Define.QuizMode.Waiting;
-                        PlusMathEnergy();
-                        QuizFadeOut(fadeDelay);
-                        StartCoroutine(WaitFadeOut(fadeDelay));
-                        break;
-                }
+                QuizSystem();
                 break;
             case Define.GameMode.Clear:
                 if (isQuizEnd)
@@ -181,6 +157,28 @@ public class QuizController : MonoBehaviour, QuizClear
         num.SetSpriteNumber(sprite);
         quizSlots[index].GetComponent<Slot>().SetQustionMarkColor(Color.clear);
         quizSlots[index].GetComponent<Slot>().SetIsEmpty();
+    }
+
+    private void QuizSystem()
+    {
+        switch (quizMode)
+        {
+            case Define.QuizMode.HavingAQuiz:
+                SpawnFildNumber();
+                break;
+            case Define.QuizMode.Matched:
+                quizMode = Define.QuizMode.Waiting;
+                AcquiredGear++;
+                PlusMathEnergy();
+                QuizFadeOut(fadeDelay);
+                StartCoroutine(WaitFadeOut(fadeDelay));
+                break;
+            case Define.QuizMode.WrongAnswer:
+                quizMode = Define.QuizMode.Waiting;
+                QuizFadeOut(fadeDelay);
+                StartCoroutine(WaitFadeOut(fadeDelay));
+                break;
+        }
     }
 
     private void SpawnFildNumber()
@@ -291,7 +289,7 @@ public class QuizController : MonoBehaviour, QuizClear
 
     public void SwitchFeverTime()
     {
-        spawnDelay *= 0.5f; 
+        spawnDelay *= 0.5f;
     }
 
     private void PlusMathEnergy()
@@ -309,12 +307,12 @@ public class QuizController : MonoBehaviour, QuizClear
         Game gameScene = Managers.Scene.CurrentScene as Game;
         SlotSpawner slotSpawner = gameScene.slotSpawner;
         slotSpawner.QuizFadeOut(delay);
-        
+
 
         foreach (Number item in numbers)
         {
             sprites.Add(item.gameObject.GetComponent<SpriteRenderer>());
-            
+
         }
 
         foreach (SpriteRenderer item in sprites)
@@ -359,13 +357,28 @@ public class QuizController : MonoBehaviour, QuizClear
                         slot.SetIsEmpty();
                         slot.SetQustionMarkColor(Color.clear);
                         curNumber.transform.position = slot.transform.position;
-                        curNumber.SwitchFildNumber();                        
-                        curNumber = null;
-                        isChoose = false;
+                        curNumber.SwitchFildNumber();
+                        
                         if (CheckSlots())
                         {
                             quizMode = Define.QuizMode.Matched;
                         }
+                        curNumber = null;
+                        isChoose = false;
+                        yield break;
+                    }
+                    else if (curNumber != null && curNumber.number != slot.AnswerNumber)
+                    {
+                        curNumber.transform.position = slot.transform.position;
+                        curNumber.GetComponent<VibrateOnClick>().StartVibrate();
+                        Game gameScene = Managers.Scene.CurrentScene as Game;
+                        foreach (GameObject go in gameScene.slotSpawner.QuizSlots)
+                            go.GetComponent<VibrateOnClick>().StartVibrate();
+
+                        curNumber.SwitchFildNumber();
+                        curNumber = null;
+                        isChoose = false;
+                        quizMode = Define.QuizMode.WrongAnswer;
                         yield break;
                     }
                 }

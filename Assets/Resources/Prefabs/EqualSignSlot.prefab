@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4038778242598617091}
   - component: {fileID: 4038778242598617090}
   - component: {fileID: -7583746519362307902}
+  - component: {fileID: 2145769287481215800}
   m_Layer: 0
   m_Name: EqualSignSlot
   m_TagString: Untagged
@@ -98,3 +99,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isUsing: 0
+--- !u!114 &2145769287481215800
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4038778242598617089}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa2e86b6548ac41538591bcaa2fd1825, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
