@@ -15,6 +15,7 @@ public class QuizController : MonoBehaviour, QuizClear
     private int rear;
     private int answer;
     private int emptySlot;
+    private int quizValue = 5;
     private float startPosY = 6f;
     private float spawnDelay = 3f;
     private float curSpawnDelay = 0;
@@ -296,7 +297,7 @@ public class QuizController : MonoBehaviour, QuizClear
     {
         PlayerStat playerStat = Managers.Game.GetPlayer().playerStat;
         // 콤보 시스템 추가 되면 콤보에따라 value 증가 되도록
-        playerStat.PlusMathEnerge(5);
+        playerStat.PlusMathEnerge(quizValue);
         UI_Game ui_Game = Managers.UI.uI_Scene as UI_Game;
         ui_Game.SetTextMathEnergy(Managers.Game.GetPlayer());
     }
@@ -358,9 +359,10 @@ public class QuizController : MonoBehaviour, QuizClear
                         slot.SetQustionMarkColor(Color.clear);
                         curNumber.transform.position = slot.transform.position;
                         curNumber.SwitchFildNumber();
-                        
+
                         if (CheckSlots())
                         {
+                            StartCoroutine(CorrectEffect(curNumber.transform.position, 0.2f, 1f));
                             quizMode = Define.QuizMode.Matched;
                         }
                         curNumber = null;
@@ -406,5 +408,28 @@ public class QuizController : MonoBehaviour, QuizClear
         numbers.Clear();
         questions.Clear();
         CreateNewQuiz();
+    }
+
+    private IEnumerator CorrectEffect(Vector3 startPos, float interval, float duration)
+    {
+
+
+        for (int i = 0; i < quizValue; i++)
+        {
+            GameObject mathEnergy = Managers.Resource.Instantiate("MathEnegy");
+            mathEnergy.transform.position = startPos;
+            Game gameScene = Managers.Scene.CurrentScene as Game;
+            mathEnergy.transform.DOLocalMove(gameScene.MainMathEnergyPos, duration);
+            StartCoroutine(RemoveCorrectEffect(mathEnergy, duration));
+
+            yield return new WaitForSeconds(interval);
+        }
+    }
+
+    private IEnumerator RemoveCorrectEffect(GameObject mathEnergy, float duration)
+    {
+        yield return new WaitForSeconds(duration);
+
+        Managers.Resource.Destroy(mathEnergy);
     }
 }

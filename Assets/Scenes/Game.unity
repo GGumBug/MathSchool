@@ -132,7 +132,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4603054529995182384, guid: b6896795726d34b40bc7cf31411d7275, type: 3}
       propertyPath: m_Name
-      value: MathEnegy
+      value: MainMathEnegy
+      objectReference: {fileID: 0}
+    - target: {fileID: 4603054529995182384, guid: b6896795726d34b40bc7cf31411d7275, type: 3}
+      propertyPath: m_TagString
+      value: MainMathEnergy
       objectReference: {fileID: 0}
     - target: {fileID: 4603054529995182391, guid: b6896795726d34b40bc7cf31411d7275, type: 3}
       propertyPath: m_RootOrder

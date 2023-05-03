@@ -10,6 +10,7 @@ public class Game : BaseScene
 
     public SlotSpawner slotSpawner { get; private set; }
     public QuizController quizController { get; private set; }
+    public Vector3 MainMathEnergyPos {get; private set;}
 
     protected override void Init()
     {
@@ -33,11 +34,22 @@ public class Game : BaseScene
         player.GetComponent<PlayerStat>().SetStartStat();
         ui_Game.SetTextMathEnergy(player);
         ui_Game.CreateHeart();
+
+        GetMainMathEnergeObject();
     }
 
     private void Update()
     {
         quizController.UpDateSpawnNumber(stageController.GameMode);
+    }
+
+    private void GetMainMathEnergeObject()
+    {
+        GameObject mainMathEnergy = GameObject.FindGameObjectWithTag("MainMathEnergy");
+        if (mainMathEnergy != null)
+            MainMathEnergyPos = mainMathEnergy.transform.position;
+        else
+            Debug.Log("MainMathEnergy가 존재하지 않습니다.");
     }
 
     public override void Clear()
