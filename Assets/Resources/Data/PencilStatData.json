@@ -9,7 +9,7 @@
       "atkDelay": "2f",
       "price": "10",
       "unlockPrice": "0",
-      "levelUpPrice": "10"
+      "levelUpPrice": "100"
     },
     {
       "level": "2",
@@ -20,7 +20,7 @@
       "atkDelay": "1.5f",
       "price": "10",
       "unlockPrice": "0",
-      "levelUpPrice": "50"
+      "levelUpPrice": "300"
     },
     {
       "level": "3",
@@ -31,7 +31,7 @@
       "atkDelay": "1f",
       "price": "10",
       "unlockPrice": "0",
-      "levelUpPrice": "100"
+      "levelUpPrice": "500"
     }
   ]
 }

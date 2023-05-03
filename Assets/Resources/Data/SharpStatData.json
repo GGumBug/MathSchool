@@ -8,8 +8,8 @@
       "atk": "7",
       "atkDelay": "1.5f",
       "price": "20",
-      "unlockPrice": "50",
-      "levelUpPrice": "30"
+      "unlockPrice": "75",
+      "levelUpPrice": "200"
     },
     {
       "level": "2",
@@ -19,8 +19,8 @@
       "atk": "12",
       "atkDelay": "1f",
       "price": "20",
-      "unlockPrice": "50",
-      "levelUpPrice": "75"
+      "unlockPrice": "75",
+      "levelUpPrice": "400"
     },
     {
       "level": "3",
@@ -30,8 +30,8 @@
       "atk": "22",
       "atkDelay": "0.7f",
       "price": "20",
-      "unlockPrice": "50",
-      "levelUpPrice": "100"
+      "unlockPrice": "75",
+      "levelUpPrice": "1000"
     }
   ]
 }

@@ -91,9 +91,9 @@ public class StageController : MonoBehaviour
 
     private void SetStageData()
     {
+        StageLevel = Managers.Game.CurrentStageLevel;
         Data.Stage curStage = Managers.Data.StageDict[StageLevel];
 
-        StageLevel = Managers.Game.CurrentStageLevel;
         maxEnemyCount = curStage.maxEnemyCount;
         feverEnemyCount = curStage.feverEnemyCount;
         totralEnemyCount = maxEnemyCount + feverEnemyCount;
