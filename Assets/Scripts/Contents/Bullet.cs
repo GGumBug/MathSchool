@@ -26,10 +26,10 @@ public class Bullet : MonoBehaviour
         {
             if (!hasTriggered)
             {
+                hasTriggered = true;
                 EnemyStat stat = collision.gameObject.GetComponent<EnemyStat>();
                 stat.OnAttacked(unitStat);
             }
-            hasTriggered = true;
             Managers.Resource.Destroy(gameObject);
             hasTriggered = false;
         }
