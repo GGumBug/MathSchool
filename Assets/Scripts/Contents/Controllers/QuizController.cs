@@ -66,7 +66,6 @@ public class QuizController : MonoBehaviour, QuizClear
                     case Define.QuizMode.Matched:
                         quizMode = Define.QuizMode.Waiting;
                         PlayerStat player = Managers.Game.GetPlayer().playerStat;
-                        player.PlusGear(1);
                         AcquiredGear++;
                         PlusMathEnergy();
                         QuizFadeOut(fadeDelay);

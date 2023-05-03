@@ -10,6 +10,7 @@ public class UI_Game : UI_Scene
     GameObject heartPanel;
     TextMeshProUGUI txtMathEnergy;
     Slider stageGauge;
+    Button button_Pause;
 
 
     public Stack<GameObject> Hearts { get; private set; } = new Stack<GameObject>();
@@ -26,12 +27,19 @@ public class UI_Game : UI_Scene
         Text_MathEnegy
     }
 
+    enum Buttons
+    {
+        Button_Pause
+    }
+
     public override void Init()
     {
         base.Init();
 
         Bind<GameObject>(typeof(GameObjects));
         Bind<TextMeshProUGUI>(typeof(Texts));
+        Bind<Button>(typeof(Buttons));
+
 
         unitPanel = GetGameObject((int)GameObjects.UnitPanel);
         heartPanel = GetGameObject((int)GameObjects.HeartPanel);
@@ -40,6 +48,9 @@ public class UI_Game : UI_Scene
 
         stageGauge = GetGameObject((int)GameObjects.Slider_StageGauge).GetComponent<Slider>();
         MakeSpwanUnitButton();
+
+        button_Pause = GetButton((int)Buttons.Button_Pause);
+        button_Pause.onClick.AddListener(GamePause);
     }
 
     public void CreateHeart()
@@ -128,5 +139,11 @@ public class UI_Game : UI_Scene
     {
         Image fill = stageGauge.fillRect.GetComponent<Image>();
         fill.color = color;
+    }
+
+    public void GamePause()
+    {
+        Managers.UI.ShowPopupUI<UI_Pause>();
+        Time.timeScale = 0f;
     }
 }

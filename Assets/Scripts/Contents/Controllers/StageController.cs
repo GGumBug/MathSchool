@@ -66,8 +66,10 @@ public class StageController : MonoBehaviour
                     Managers.Game.NextStage(StageLevel);
                     UI_GameEnd uI_GameEnd = Managers.UI.ShowPopupUI<UI_GameEnd>();
                     Game gameScene = Managers.Scene.CurrentScene as Game;
+                    QuizController quiz = gameScene.quizController;
+                    Managers.Game.GetPlayer().playerStat.PlusGear(quiz.AcquiredGear);
                     uI_GameEnd.ChangeGameEndTitle(GameMode);
-                    uI_GameEnd.SetGearCount(gameScene.quizController.AcquiredGear);
+                    uI_GameEnd.SetGearCount(quiz.AcquiredGear);
                 }
                 break;
             case Define.GameMode.Over:
@@ -76,6 +78,8 @@ public class StageController : MonoBehaviour
                     isGameEnd = true;
                     UI_GameEnd uI_GameEnd = Managers.UI.ShowPopupUI<UI_GameEnd>();
                     Game gameScene = Managers.Scene.CurrentScene as Game;
+                    QuizController quiz = gameScene.quizController;
+                    Managers.Game.GetPlayer().playerStat.PlusGear(quiz.AcquiredGear);
                     uI_GameEnd.ChangeGameEndTitle(GameMode);
                     uI_GameEnd.SetGearCount(gameScene.quizController.AcquiredGear);
                 }
