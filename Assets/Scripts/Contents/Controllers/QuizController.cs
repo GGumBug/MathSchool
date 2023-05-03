@@ -17,9 +17,8 @@ public class QuizController : MonoBehaviour, QuizClear
     private int emptySlot;
     private int quizValue = 5;
     private float startPosY = 6f;
-    private float spawnDelay = 3f;
+    private float spawnDelay = 1.5f;
     private float curSpawnDelay = 0;
-    private float fadeDelay = 2f;
     private bool isChoose;
     private bool isQuizEnd;
 
@@ -31,6 +30,7 @@ public class QuizController : MonoBehaviour, QuizClear
     Define.QuizMode quizMode = Define.QuizMode.HavingAQuiz;
 
     public int quizLength { get; private set; }
+    public float fadeDelay { get; private set; } = 1.5f;
     public int AcquiredGear { get; private set; }
 
     private void Update()
@@ -65,11 +65,7 @@ public class QuizController : MonoBehaviour, QuizClear
                 QuizSystem();
                 break;
             case Define.GameMode.Clear:
-                if (isQuizEnd)
-                    return;
-                isQuizEnd = true;
-                quizMode = Define.QuizMode.QuizEnd;
-                QuizFadeOut(fadeDelay);
+                QuizSystem();
                 break;
             case Define.GameMode.Over:
                 if (isQuizEnd)
@@ -332,6 +328,11 @@ public class QuizController : MonoBehaviour, QuizClear
         gameScene.slotSpawner.SpwanSlot();
         FillQuizSlot(gameScene.slotSpawner.QuizSlots);
         quizMode = Define.QuizMode.HavingAQuiz;
+    }
+
+    public void SetQuizMode(Define.QuizMode changeMode)
+    {
+        quizMode = changeMode;
     }
 
     private IEnumerator SelectNumber(RaycastHit numhit, Number num)

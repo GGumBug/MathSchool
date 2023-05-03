@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerStat : Stat
 {
-    private int _startEnergy = 500;
+    private int _startEnergy = 10;
 
     public int MathEnergy { get; protected set; }
     public int Gear { get; protected set; }

@@ -67,6 +67,8 @@ public class StageController : MonoBehaviour
                     UI_GameEnd uI_GameEnd = Managers.UI.ShowPopupUI<UI_GameEnd>();
                     Game gameScene = Managers.Scene.CurrentScene as Game;
                     QuizController quiz = gameScene.quizController;
+                    quiz.SetQuizMode(Define.QuizMode.QuizEnd);
+                    quiz.QuizFadeOut(quiz.fadeDelay);
                     Managers.Game.GetPlayer().playerStat.PlusGear(quiz.AcquiredGear);
                     uI_GameEnd.ChangeGameEndTitle(GameMode);
                     uI_GameEnd.SetGearCount(quiz.AcquiredGear);

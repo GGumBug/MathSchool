@@ -3,31 +3,31 @@
     {
       "level": "1",
       "name": "kid",
-      "hp": "50",
-      "maxHp": "50",
+      "hp": "75",
+      "maxHp": "75",
       "atk": "10",
       "atkDelay": "2f",
-      "moveSpeed": "5f",
+      "moveSpeed": "0.5f",
       "value": "2"
     },
     {
       "level": "2",
       "name": "adult",
-      "hp": "100",
-      "maxHp": "100",
+      "hp": "150",
+      "maxHp": "150",
       "atk": "15",
       "atkDelay": "1.5f",
-      "moveSpeed": "5f",
+      "moveSpeed": "1f",
       "value": "5"
     },
     {
       "level": "3",
       "name": "tiger",
-      "hp": "200",
-      "maxHp": "200",
+      "hp": "250",
+      "maxHp": "250",
       "atk": "25",
       "atkDelay": "1f",
-      "moveSpeed": "5f",
+      "moveSpeed": "3f",
       "value": "10"
     }
   ]
