@@ -25,6 +25,8 @@ public class UI_Warning : UI_Popup
 
     public override void Init()
     {
+        base.Init();
+
         Bind<TextMeshProUGUI>(typeof(Texts));
         Bind<Button>(typeof(Buttons));
 

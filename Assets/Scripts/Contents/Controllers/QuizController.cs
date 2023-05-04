@@ -413,8 +413,6 @@ public class QuizController : MonoBehaviour, QuizClear
 
     private IEnumerator CorrectEffect(Vector3 startPos, float interval, float duration)
     {
-
-
         for (int i = 0; i < quizValue; i++)
         {
             GameObject mathEnergy = Managers.Resource.Instantiate("MathEnegy");

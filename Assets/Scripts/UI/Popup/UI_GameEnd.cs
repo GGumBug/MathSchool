@@ -28,6 +28,8 @@ public class UI_GameEnd : UI_Popup
 
     public override void Init()
     {
+        base.Init();
+
         canvasGroup = GetComponentInChildren<CanvasGroup>();
         canvasGroup.alpha = 0f;
 

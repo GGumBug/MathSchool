@@ -16,6 +16,8 @@ public class UI_Pause : UI_Popup
 
     public override void Init()
     {
+        base.Init();
+
         Bind<Button>(typeof(Buttons));
         button_Resume = GetButton((int)Buttons.Button_Resume);
         button_Exit = GetButton((int)Buttons.Button_Exit);

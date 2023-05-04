@@ -13,7 +13,8 @@ public class PlayerStat : Stat
     {
         MaxHp = 3;
         MathEnergy = 0;
-        Gear = PlayerPrefs.GetInt("Gear");
+        //Gear = PlayerPrefs.GetInt("Gear");
+        Gear = 1000;
     }
 
     public void SetMathEnergy(int value)

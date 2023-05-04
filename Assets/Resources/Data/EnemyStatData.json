@@ -16,7 +16,7 @@
       "hp": "150",
       "maxHp": "150",
       "atk": "15",
-      "atkDelay": "1.5f",
+      "atkDelay": "1f",
       "moveSpeed": "1f",
       "value": "5"
     },
@@ -27,7 +27,7 @@
       "maxHp": "200",
       "atk": "15",
       "atkDelay": "1f",
-      "moveSpeed": "2f",
+      "moveSpeed": "1.5f",
       "value": "10"
     }
   ]

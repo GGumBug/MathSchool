@@ -40,7 +40,7 @@
       "stageLevel": "5",
       "startMathEnergy": "40",
       "maxEnemyCount": "20",
-      "feverEnemyCount": "40",
+      "feverEnemyCount": "25",
       "nomalEnemy": "Kid",
       "highEnemy": "Adult",
       "eliteEnemy": "Tiger"

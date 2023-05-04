@@ -71,7 +71,7 @@ public class UI_Upgrade : UI_Popup
                 continue;
             }
 
-            if (level >= unitDict.Count - 1)
+            if (level >= unitDict.Count)
             {
                 upgradeButton.AppearMaxLevel();
                 continue;

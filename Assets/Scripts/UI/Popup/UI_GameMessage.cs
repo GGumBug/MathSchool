@@ -15,6 +15,8 @@ public class UI_GameMessage : UI_Popup
 
     public override void Init()
     {
+        base.Init();
+
         Bind<TextMeshProUGUI>(typeof(Texts));
 
         text_Message = GetTextMeshProUGUI((int)Texts.Text_Message);
