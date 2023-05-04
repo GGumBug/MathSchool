@@ -66,16 +66,23 @@ public class UI_GameEnd : UI_Popup
 
     public void Retry()
     {
+        Time.timeScale = 1f;
         Managers.Scene.LoadScene(Define.Scene.Game);
     }
 
     public void GoToMainScene()
     {
+        Time.timeScale = 1f;
         Managers.Scene.LoadScene(Define.Scene.Main);
     }
 
     public void FadeIn()
     {
-        canvasGroup.DOFade(1f, 2f);
+        canvasGroup.DOFade(1f, 2f).OnComplete(OnTweenComplete);
+    }
+
+    private void OnTweenComplete()
+    {
+        Time.timeScale = 0f;
     }
 }

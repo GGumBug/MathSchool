@@ -23,11 +23,11 @@
     {
       "level": "3",
       "name": "tiger",
-      "hp": "250",
-      "maxHp": "250",
-      "atk": "25",
+      "hp": "200",
+      "maxHp": "200",
+      "atk": "15",
       "atkDelay": "1f",
-      "moveSpeed": "3f",
+      "moveSpeed": "2f",
       "value": "10"
     }
   ]

@@ -62,7 +62,7 @@ public class StageController : MonoBehaviour
             case Define.GameMode.Clear:
                 if (fieldEnemyCount <= 0 && !isGameEnd)
                 {
-                    isGameEnd = true;
+                    isGameEnd = true;                    
                     Managers.Game.NextStage(StageLevel);
                     UI_GameEnd uI_GameEnd = Managers.UI.ShowPopupUI<UI_GameEnd>();
                     Game gameScene = Managers.Scene.CurrentScene as Game;
@@ -77,7 +77,7 @@ public class StageController : MonoBehaviour
             case Define.GameMode.Over:
                 if (!isGameEnd)
                 {
-                    isGameEnd = true;
+                    isGameEnd = true;                    
                     UI_GameEnd uI_GameEnd = Managers.UI.ShowPopupUI<UI_GameEnd>();
                     Game gameScene = Managers.Scene.CurrentScene as Game;
                     QuizController quiz = gameScene.quizController;

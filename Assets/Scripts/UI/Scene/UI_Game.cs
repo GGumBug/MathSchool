@@ -119,8 +119,11 @@ public class UI_Game : UI_Scene
 
     public void MinusHeart()
     {
-        GameObject go = Hearts.Pop();
-        Managers.Resource.Destroy(go);
+        if (Hearts.Count != 0)
+        {
+            GameObject go = Hearts.Pop();
+            Managers.Resource.Destroy(go);
+        }
 
         PlayerStat player = Managers.Game.GetPlayer().gameObject.GetComponent<PlayerStat>();
         player.MinusHP();

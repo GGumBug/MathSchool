@@ -7,6 +7,7 @@ namespace Data
     public class Stage
     {
         public int stageLevel;
+        public int startMathEnergy;
         public int maxEnemyCount;
         public int feverEnemyCount;
         public string nomalEnemy;

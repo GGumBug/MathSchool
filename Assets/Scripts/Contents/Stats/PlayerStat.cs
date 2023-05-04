@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerStat : Stat
 {
-    private int _startEnergy = 10;
+    private int startMathEnergy = 10;
 
     public int MathEnergy { get; protected set; }
     public int Gear { get; protected set; }
@@ -23,7 +23,10 @@ public class PlayerStat : Stat
 
     public void SetStartStat()
     {
-        MathEnergy = _startEnergy;
+        Data.Stage curStage = Managers.Data.StageDict[Managers.Game.CurrentStageLevel];
+
+        startMathEnergy = curStage.startMathEnergy;
+        MathEnergy = startMathEnergy;
         Hp = MaxHp;
     }
 

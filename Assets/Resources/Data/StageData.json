@@ -2,7 +2,8 @@
   "stages": [
     {
       "stageLevel": "1",
-      "maxEnemyCount": "20",
+      "startMathEnergy": "10",
+      "maxEnemyCount": "15",
       "feverEnemyCount": "10",
       "nomalEnemy": "Kid",
       "highEnemy": "Kid",
@@ -10,7 +11,8 @@
     },
     {
       "stageLevel": "2",
-      "maxEnemyCount": "30",
+      "startMathEnergy": "10",
+      "maxEnemyCount": "20",
       "feverEnemyCount": "20",
       "nomalEnemy": "Kid",
       "highEnemy": "Kid",
@@ -18,7 +20,8 @@
     },
     {
       "stageLevel": "3",
-      "maxEnemyCount": "20",
+      "startMathEnergy": "20",
+      "maxEnemyCount": "15",
       "feverEnemyCount": "20",
       "nomalEnemy": "Kid",
       "highEnemy": "Kid",
@@ -26,7 +29,8 @@
     },
     {
       "stageLevel": "4",
-      "maxEnemyCount": "30",
+      "startMathEnergy": "30",
+      "maxEnemyCount": "20",
       "feverEnemyCount": "30",
       "nomalEnemy": "Kid",
       "highEnemy": "Adult",
@@ -34,6 +38,7 @@
     },
     {
       "stageLevel": "5",
+      "startMathEnergy": "40",
       "maxEnemyCount": "20",
       "feverEnemyCount": "40",
       "nomalEnemy": "Kid",
@@ -42,10 +47,29 @@
     },
     {
       "stageLevel": "6",
+      "startMathEnergy": "40",
       "maxEnemyCount": "30",
       "feverEnemyCount": "40",
       "nomalEnemy": "Adult",
       "highEnemy": "Adult",
+      "eliteEnemy": "Tiger"
+    },
+    {
+      "stageLevel": "7",
+      "startMathEnergy": "50",
+      "maxEnemyCount": "40",
+      "feverEnemyCount": "40",
+      "nomalEnemy": "Adult",
+      "highEnemy": "Tiger",
+      "eliteEnemy": "Tiger"
+    },
+    {
+      "stageLevel": "8",
+      "startMathEnergy": "50",
+      "maxEnemyCount": "50",
+      "feverEnemyCount": "50",
+      "nomalEnemy": "Adult",
+      "highEnemy": "Tiger",
       "eliteEnemy": "Tiger"
     }
   ]
