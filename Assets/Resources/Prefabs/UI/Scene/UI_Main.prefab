@@ -1226,7 +1226,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Math Cool
+  m_text: MathSchool
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 24bef07d0ea51464885331d0793ea653, type: 2}
   m_sharedMaterial: {fileID: 9084906181630862645, guid: 24bef07d0ea51464885331d0793ea653, type: 2}
