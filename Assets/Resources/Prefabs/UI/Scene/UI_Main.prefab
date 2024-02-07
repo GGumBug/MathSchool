@@ -1228,15 +1228,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: MathSchool
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 24bef07d0ea51464885331d0793ea653, type: 2}
-  m_sharedMaterial: {fileID: 9084906181630862645, guid: 24bef07d0ea51464885331d0793ea653, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 4554a4c2334a140c0a7acbd23dae9297, type: 2}
+  m_sharedMaterial: {fileID: -6840695789258918200, guid: 4554a4c2334a140c0a7acbd23dae9297, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
